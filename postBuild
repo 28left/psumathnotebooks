@@ -1,0 +1,8 @@
+jupyter contrib nbextension install --user
+jupyter nbextension enable --py widgetsnbextension
+jupyter nbextension enable python-markdown/main
+jupyter nbextension enable hide_input_all/main
+jupyter nbextension enable hide_input/main
+jupyter nbextension enable RISE/main
+
+
