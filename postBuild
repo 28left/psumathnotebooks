@@ -1,1 +1,3 @@
 jupyter contrib nbextension install --user
+jupyter nbextension enable hide_input_all/main
+jupyter nbextension enable hide_input/main
