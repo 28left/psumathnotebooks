@@ -4,7 +4,10 @@ from sympy import latex, simplify
 # get output methods for IPython
 from IPython.display import display, Markdown, Latex, Math, clear_output
 
+# ipywidgets library
+import ipywidgets as widgets
 
+# define and compare methods
 import cyllene.f_define as fd
 import cyllene.f_compare as fc
 
@@ -73,6 +76,8 @@ class BaseProblem():
                  statement, 
                  type,
                  num_inputs=1,
+                 input_widget=False,
+                 output_widget=False,
                  regen=False
                 ):
 
@@ -80,6 +85,8 @@ class BaseProblem():
         self.statement = statement
         self.type = type
         self.num_inputs = num_inputs
+        self.input_widget = input_widget
+        self.output_widget = output_widget
         self.regen = regen
         self.status = 'undecided'
         self.check = []
@@ -88,7 +95,7 @@ class BaseProblem():
 
         # Show just title and statement
         if self.regen:
-            title = '### <font color=\'SteelBlue\'>! Problem' + self.name + '</font>'
+            title = '### <font color=\'SteelBlue\'>&#128260;  Problem ' + self.name + '</font>'
         else:
             title = '### Problem ' + self.name 
         display(Markdown(title))
@@ -124,11 +131,13 @@ class ExpressionProblem(BaseProblem):
                  answer_type, 
                  correct_answer,
                  eval_mode='full',
+                 input_widget=False,
+                 output_widget=False,
                  regen=False
                 ):
 
         # call the parent constructor 
-        super().__init__(name, statement, 'expression', num_inputs, regen)
+        super().__init__(name, statement, 'expression', num_inputs, input_widget, output_widget, regen)
 
         if type(expression) != list:
             expression = [expression]
@@ -195,18 +204,66 @@ class ExpressionProblem(BaseProblem):
         if len(self.expression) > 1:
             for i in range(len(self.expression)):
                 if type(self.expression[i] == str):
-                    display(Markdown("**("+str(i+1)+")** $\quad$"+self.expression[i]))
+                    display(Markdown("**("+str(i+1)+")** &nbsp;&nbsp;"+self.expression[i]))
                 else:
                     display(Math("**("+str(i+1)+")** \quad" + latex(self.expression[i])))
 
                 
+        if self.input_widget:
+            # if input_widget flag is set and multiple inputs required, 
+            # display instructions
+            if self.num_inputs > 1:
+                display(Markdown("*Separate multiple answers by comma(s).*"))
+            
+            # next create text widget and button
+            
+            # Setup text input field
+            self.input_field = widgets.Text(
+                value='',
+                placeholder='Type here',
+                description='Answer: ',
+                continuous_update=False,
+                disabled=False
+                )
 
-        # instructions 
-        display(Markdown("*Enter the answer(s) in the cell below.*"))
+            self.input_field.observe(self.on_enter, names='value')  
+        
+            # Submit button
+            self.submit_button = widgets.Button(
+                description='Submit',
+                disabled=False,
+                button_style='success', # 'success', 'info', 'warning', 'danger' or ''
+                tooltip='Check answer',
+                )
 
-    # def show_result(self):
-    #     jpr.show_result(self.current_answer, self.check)
+            self.submit_button.on_click(self.on_submit)
 
+            # Put widgets in box
+            display(widgets.Box([self.input_field, self.submit_button]))
+            
+    
+        else:
+            #if not, display cell instructions
+            display(Markdown("*Enter the answer(s) in the cell below.*"))
+        
+        if self.output_widget:
+            # Add dedicated output area
+            self.out = widgets.Output()
+            display(self.out)
+            
+
+    # methods for enter/click submit
+    def on_enter(self,input_text):
+    
+        self.check_answer([x.strip() for x in input_text['new'].split(',')])
+
+    def on_submit(self,bt):
+    
+        self.check_answer([x.strip() for x in self.input_field.value.split(',')])
+
+
+
+    # show result in output cell
     def show_result(self):
 
         result_string = "You entered: <br>"
@@ -228,7 +285,15 @@ class ExpressionProblem(BaseProblem):
                     line += '&nbsp;&nbsp;&nbsp;&nbsp; - &nbsp;' + answer[1][j]+'<br>'
             result_string += line        
         
-        display(Markdown(result_string))
+        # direct output depending on output_widget flag
+        if self.output_widget:
+            # send result to output widget
+            self.out.clear_output()
+            with self.out:
+                display(Markdown(result_string))
+        else:
+            # use standard cell output
+            display(Markdown(result_string))
 
 
 
@@ -247,10 +312,10 @@ class ExpressionProblem(BaseProblem):
 
 class MultipleChoice(BaseProblem):
     
-    def __init__(self, name, statement, choices):
+    def __init__(self, name, statement, choices, input_widget=False, output_widget=False):
 
         # call the parent constructor 
-        super().__init__(name, statement, 'multchoice')
+        super().__init__(name, statement, 'multchoice', 1, input_widget, output_widget)
 
         """
         get number of choices
@@ -274,9 +339,39 @@ class MultipleChoice(BaseProblem):
         # list the choices
         for i in range(self.num_choices):
             display(Markdown('**(' + str(i+1) + ')**  &nbsp;&nbsp;  ' + self.choices[self.indices[i]]))
-        display(Markdown("*Enter the number of the correct choice in the cell below.*"))
+            
+        # if widget flag is set, create buttons
+        if self.input_widget:
+            
+            self.choice_buttons =  [
+                widgets.Button(
+                    description='( '+str(i+1)+' )',
+                    disabled=False,
+                    button_style='warning', # 'success', 'info', 'warning', 'danger' or ''
+                    tooltip='Answer choice '+str(i+1)) 
+                for i in range(self.num_choices) ]
 
- 
+            # Activate handler for every button
+            for button in self.choice_buttons:
+                button.on_click(self.on_button_clicked) # link to a click event function
+            
+            display(widgets.Box(self.choice_buttons))
+
+        # otherwise cell input instructions
+        else:
+            display(Markdown("*Enter the number of the correct choice in the cell below.*"))
+
+        if self.output_widget:
+            # Add dedicated output area
+            self.out = widgets.Output()
+            display(self.out)
+
+
+    def on_button_clicked(self,bt):
+         
+        self.check_answer(bt.description[2:-2])
+        
+    
     def check_answer(self, answer):
 
         # reset current answer check
@@ -298,22 +393,32 @@ class MultipleChoice(BaseProblem):
             self.check.append('Error')
         
         if self.check[0] == True:
-            display(Markdown('&#9989; &nbsp; **Correct!**'))
+            result_string = '('+answer+') &nbsp;&nbsp;' + '&#9989; &nbsp; **Correct!**'
             self.status = 'correct'
         elif self.check[0] == False:
-            display(Markdown('&#10060; &nbsp; **Incorrect**'))
+            result_string = '('+answer+') &nbsp;&nbsp;' + '&#10060; &nbsp; **Incorrect**'
             self.status = 'incorrect'
         else:
-            display(Markdown('Please enter an integer value.'))
+            result_string = 'Please enter an integer value.'
             self.status = 'undecided'
 
+        # direct output depending on output_widget flag
+        if self.output_widget:
+            # send result to output widget
+            self.out.clear_output()
+            with self.out:
+                display(Markdown(result_string))
+        else:
+            # use standard cell output
+            display(Markdown(result_string))
+       
 
 class TrueFalse(BaseProblem):
     
-    def __init__(self, name, statement, truth_value):
+    def __init__(self, name, statement, truth_value, input_widget=False, output_widget=False):
 
         # call the parent constructor 
-        super().__init__(name, statement, 'truefalse')
+        super().__init__(name, statement, 'truefalse', 1, input_widget, output_widget)
 
         # save correct answer
         self.truth_value = truth_value
@@ -326,9 +431,42 @@ class TrueFalse(BaseProblem):
         display(Markdown("**True or False?**"))
         display(Markdown(self.statement))
 
-       # instructions 
-        display(Markdown("*Enter `T` or `F` in the cell below.*"))
+        # if widget flag is set, create buttons
+        if self.input_widget:
+            
+            self.choice_buttons =  [
+                widgets.Button(
+                    description='True',
+                    disabled=False,
+                    button_style='success', # 'success', 'info', 'warning', 'danger' or ''
+                    tooltip='Answer choice: True'),
+                widgets.Button(
+                    description='False',
+                    disabled=False,
+                    button_style='danger', # 'success', 'info', 'warning', 'danger' or ''
+                    tooltip='Answer choice: False'),
+            ]
 
+            # Activate handler for every button
+            for button in self.choice_buttons:
+                button.on_click(self.on_button_clicked) # link to a click event function
+            
+            display(widgets.Box(self.choice_buttons))
+
+        # otherwise cell input instructions
+        else:
+            display(Markdown("*Enter `T` or `F` in the cell below.*"))
+
+        if self.output_widget:
+            # Add dedicated output area
+            self.out = widgets.Output()
+            display(self.out)
+
+            
+    def on_button_clicked(self,bt):
+         
+        self.check_answer(bt.description)
+            
  
     def check_answer(self, answer):
 
@@ -352,13 +490,22 @@ class TrueFalse(BaseProblem):
             self.check.append('Error')
         
         if self.check[0] == True:
-            display(Markdown('&#9989; &nbsp; **Correct!**'))
+            result_string = '&#9989; &nbsp; **Correct!**'
             self.status = 'correct'
         elif self.check[0] == False:
-            display(Markdown('&#10060; &nbsp; **Incorrect**'))
+            result_string = '&#10060; &nbsp; **Incorrect**'
             self.status = 'incorrect'
         else:
-            display(Markdown('Please enter `T` or `F`.'))
+            result_string = 'Please enter `T` or `F`.'
             self.status = 'undecided'
 
+        # direct output depending on output_widget flag
+        if self.output_widget:
+            # send result to output widget
+            self.out.clear_output()
+            with self.out:
+                display(Markdown(result_string))
+        else:
+            # use standard cell output
+            display(Markdown(result_string))
                 
