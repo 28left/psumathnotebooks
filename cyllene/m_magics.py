@@ -21,7 +21,8 @@ def initialize(line):
 
     try:    
         # run the init file to load problems etc.
-        ip.magic('run '+init_file)  
+        ip.magic('run '+init_file)
+        print("Initialization successful!")
 
     except:
         # print(line)

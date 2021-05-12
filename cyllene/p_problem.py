@@ -95,7 +95,7 @@ class BaseProblem():
 
         # Show just title and statement
         if self.regen:
-            title = '### <font color=\'SteelBlue\'>! Problem' + self.name + '</font>'
+            title = '### <font color=\'SteelBlue\'>&#128260;  Problem ' + self.name + '</font>'
         else:
             title = '### Problem ' + self.name 
         display(Markdown(title))

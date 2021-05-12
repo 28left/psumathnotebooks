@@ -32,7 +32,7 @@ def exception_handler(exception_type, exception, traceback):
     
 
 ipython.input_transformers_cleanup.extend((replace_exponentiation_symbol, check_cell_submitted))
-# ipython._showtraceback = exception_handler
+ipython._showtraceback = exception_handler
 
 
 
