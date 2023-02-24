@@ -1,0 +1,2087 @@
+19. Chain Rule* (3418886)
+
+<EQN>
+
+($PROBLEM) = pick(1,0,1,2,3);
+
+if ( $PROBLEM == 0 )
+{
+$A = randnum(3,5,1);
+$B = randnum(1,7,1,$A);
+$n = randnum(3,4,1); $nn = $n - 1;
+$m = randnum(4,8,1,$n); $mm = $m - 1;
+@EQNS = ($n*$A + $m*$A, $B*$n, $n*$A + $m, $A + $A*$m, $A+$m, $m*$A, $n*$A);
+$QUESTION = 'If \[f(x) = x^{$n}(${A}x + $B)^{$m}\], find \[f\'(x)\].';
+$ANSWER = '\[x^{$nn}(${A}x + $B)^{$mm}($EQNS[0]x + $EQNS[1])\]';
+$WRONG1 = '\[x^{$nn}(${A}x + $B)^{$mm}($EQNS[2]x + $EQNS[1])\]';
+$WRONG2 = '\[x^{$nn}(${A}x + $B)^{$mm}($EQNS[4]x + $EQNS[1])\]';
+$WRONG3 = '\[x^{$nn}(${A}x + $B)^{$mm}($EQNS[3]x + $B)\]'; #
+$WRONG4 = '\[x^{$nn}(${A}x + $B)^{$mm}($EQNS[2]x + $B)\]';
+}
+elsif ( $PROBLEM == 1 )
+{
+$A = randnum(4,10,2);
+$n = randnum(3,8,1,$A); $nn = $n - 1;
+@EQNS = ($A*$n/2, $A/2, $A*$n);
+$QUESTION = 'If \[f(x) = \frac{$A}{\sqrt{x^{$n} + 1}}\], find \[f\'(x)\].';
+$ANSWER = '\[-\frac{$EQNS[0]x^{$nn}}{(x^{$n}+1)^{3/2}}\]';
+$WRONG1 = '\[-\frac{$EQNS[1]}{(x^{$n}+1)^{3/2}}\]';
+$WRONG2 = '\[-\frac{$EQNS[1]x}{(x^{$n}+1)^{3/2}}\]';
+$WRONG3 = '\[-\frac{$EQNS[0]x^{$nn}}{(x^{$n}+1)^{1/2}}\]';
+$WRONG4 = '\[-\frac{$EQNS[2]x^{$nn}}{(x^{$n}+1)^{1/2}}\]';
+}
+elsif ( $PROBLEM == 2 )
+{
+$A = randnum(2,5,1);
+$B = randnum(1,5,1,$A);
+$C = randnum(2,5,1,$A); $AC = $A*$C; $BC = $B*$C; 
+$D = randnum(1,5,1,$C); $AD = $A*$D; $ADBC = -$AD - $BC;
+$n = randnum(3,5,1); $nn = $n - 1; $nnn = $n + 1;
+$ADBCn = $ADBC * $n;
+$An = $A*$n;
+@EQNS = ($A, $C, $AC);
+$QUESTION = 'If \[f(x) = \left(\frac{${A}x + $B}{${C}x - $D}\right)^{$n}\], find \[f\'(x)\].';
+$ANSWER = '\[$ADBCn\frac{(${A}x + $B)^{$nn}}{(${C}x - $D)^{$nnn}}\]';
+$WRONG1 = '\[$n\frac{(${A}x + $B)^{$nn}}{(${C}x - $D)^{$nn}}\]';
+$WRONG2 = '\[\frac{$A(${A}x + $B)^{$nn}}{$C(${C}x - $D)^{$nn}}\]';
+$WRONG3 = '\[$n\left(\frac{$ADBC}{(${C}x - $D)^2}\right)^{$nn}\]';
+$WRONG4 = '\[\frac{$An}{$C}\left(\frac{${A}x + $B}{${C}x - $D}\right)^{$nn}\]';
+}
+elsif ( $PROBLEM == 3 )
+{
+$A = randnum(3,5,1);
+$B = $A*randnum(2,4,1) + randnum(-1,1,2);
+if ($A == 3) { ($n) = pick(1,4,5,7,8) }
+if ($A == 4) { ($n) = pick(1,3,5,7,9) }
+if ($A == 5) { ($n) = pick(1,3,4,6,7) }
+$nn = $n - 1;
+$m = randnum(3,6,1,$n); $mm = $m - 1; $mmm = $m+1;
+
+@ERRS = pick(6,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7,8,9,10);
+@EQNS = ($A, $n, $m*$A, 2*$m, $A*$n, $n*$B, $A*($n - $m), $n*$B + $ERRS[0], $A*($n - $m) + $ERRS[1], $n*$B + $ERRS[2], $A*($n - $m) + $ERRS[3], $n*$B + $ERRS[4], $A*($n - $m) + $ERRS[6]);
+
+$QUESTION = 'If \[f(x) = \frac{x^{$n}}{(${A}x + $B)^{$m}}\], find \[f\'(x)\].';
+$ANSWER = '\[\frac{x^{$nn}($EQNS[6]x + $EQNS[5])}{($EQNS[0]x + $B)^{$mmm}}\]';
+$WRONG1 = '\[\frac{$EQNS[5]x^{$nn}}{($EQNS[0]x + $B)^{$mmm}}\]';
+$WRONG2 = '\[\frac{x^{$nn}($EQNS[8]x + $EQNS[7])}{($EQNS[0]x + $B)^{$mmm}}\]';
+$WRONG3 = '\[\frac{$EQNS[10]x + $EQNS[9]}{($EQNS[0]x + $B)^{$mmm}}\]';
+$WRONG4 = '\[\frac{x^{$nn}($EQNS[12]x + $EQNS[11])}{($EQNS[0]x + $B)^{$mmm}}\]';
+}
+''</EQN>
+
+<watex><EQN $QUESTION></watex>
+
+<_>
+
+<watex><EQN $ANSWER></watex>
+<watex><EQN $WRONG1></watex>
+<watex><EQN $WRONG2></watex>
+<watex><EQN $WRONG3></watex>
+<watex><EQN $WRONG4></watex>
+
+<EQN>
+
+@SOLUTIONS = (
+"<watex>
+Start by using the product rule to compute the derivative of \[f(x) = x^{$n}(${A}x + $B)^{$m}\]:
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f'(x)  
+& = & ${n}x^{$nn}(${A}x + $B)^{$m} + x^{$n}*$m(${A}x + $B)^{$mm}*\frac{d}{dx}(${A}x + $B)\\
+& = & ${n}x^{$nn}(${A}x + $B)^{$m} + x^{$n}*$m(${A}x + $B)^{$mm}*$A\\
+& = &  ${n}x^{$nn}(${A}x + $B)^{$m} + $EQNS[5]x^{$n}(${A}x + $B)^{$mm}
+\end{array}
+\]
+</center> 
+<br>
+Note the factor of \[$A\], which is the derivative of \[${A}x + $B\], that shows up in the second term as a result of applying the chain rule.  Now simplify the derivative by pulling out the common factors of \[x^{$nn}\] and \[(${A}x + $B)^{$mm}\]:
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f'(x)  & = &  x^{$nn}(${A}x + $B)^{$mm}[${n}(${A}x + $B) + $EQNS[5]x]\\
+& = &  x^{$nn}(${A}x + $B)^{$mm}[$EQNS[6]x + $EQNS[1] + $EQNS[5]x]\\
+& = &  x^{$nn}(${A}x + $B)^{$mm}[$EQNS[0]x + $EQNS[1]]
+\end{array}
+\]
+</center> 
+</watex>",
+
+"<watex>
+Before computing the derivative, rewrite the function in the following manner:
+<br><br>
+<center>\[f(x)=$A(x^{$n}+1)^{-1/2}\]</center>
+<br>
+Now to compute the derivative, use the general power rule (which includes the chain rule):
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f'(x)  
+& = & $A\left(-\frac{1}{2}\right) (x^{$n} + 1)^{-3/2} \frac{d}{dx}(x^{$n} + 1)\\
+& = & -$EQNS[1]  (x^{$n} + 1)^{-3/2} ${n}x^{$nn} \\
+& = & -\frac{$EQNS[0]x^{$nn}}{(x^{$n} + 1)^{3/2}} 
+\end{array}
+\]
+</center> 
+<br>
+Note that the factor of \[${n}x^{$nn}\] is the derivative of \[x^{$n} + 1\] and appears as a result of applying the chain rule.
+</watex>",
+
+"<watex>
+<center>\[
+\begin{array}{rcll}
+f'(x)  
+& = & \frac{d}{dx} \left(\frac{$EQNS[0]x + $B}{$EQNS[1]x - $D}\right)^{$n} \\
+& = & $n\left(\frac{$EQNS[0]x + $B}{$EQNS[1]x - $D}\right)^{$nn} \frac{d}{dx}\left(\frac{$EQNS[0]x + $B}{$EQNS[1]x - $D}\right) & \pre{ by the general power rule}\\
+& = & $n\left(\frac{$EQNS[0]x + $B}{$EQNS[1]x - $D}\right)^{$nn} \frac{$A($EQNS[1]x - $D) - ($EQNS[0]x + $B)$C}{($EQNS[1]x - $D)^2} <s:quad> & \pre{ by the quotient rule}\\
+& = & $n\left(\frac{$EQNS[0]x + $B}{$EQNS[1]x - $D}\right)^{$nn} \frac{$EQNS[2]x - $AD - $EQNS[2]x - $BC}{($EQNS[1]x - $D)^2} \\
+& = & $n\frac{($EQNS[0]x + $B)^{$nn}}{($EQNS[1]x - $D)^{$nn}} \frac{$ADBC}{($EQNS[1]x - $D)^2} \\
+& = & $ADBCn\frac{($EQNS[0]x + $B)^{$nn}}{($EQNS[1]x - $D)^{$nnn}}
+\end{array}
+\]</center> 
+</watex>",
+
+"<watex>
+Start by using the quotient rule to compute the derivative of \[f(x) = \frac{x^{$n}}{($EQNS[0]x + $B)^{$m}}\]:
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f'(x)  
+& = & \frac{$EQNS[1]x^{$nn}($EQNS[0]x + $B)^{$m} - x^{$n}\cdot$m($EQNS[0]x + $B)^{$mm}\cdot$EQNS[0]}{[($EQNS[0]x + $B)^{$m}]^2}\\
+& = & \frac{$EQNS[1]x^{$nn}($EQNS[0]x + $B)^{$m} - $EQNS[2]x^{$n}($EQNS[0]x + $B)^{$mm}}{($EQNS[0]x+$B)^{$EQNS[3]}}\\
+\end{array}
+\]
+</center> 
+<br>
+Note the factor of \[$A\], which is the derivative of \[${A}x + $B\], that shows up in the second term of the numerator as a result of applying the chain rule.  Now simplify the numerator by pulling out the common factors of \[x^{$nn}\] and \[(${A}x + $B)^{$mm}\]:
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f'(x)  & = &  \frac{x^{$nn}($EQNS[0]x + $B)^{$mm}[$EQNS[1]($EQNS[0]x + $B) - $EQNS[2]x]}{($EQNS[0]x + $B)^{$EQNS[3]}}\\
+& = &  \frac{x^{$nn}($EQNS[0]x + $B)^{$mm}[$EQNS[4]x + $EQNS[5] - $EQNS[2]x]}{($EQNS[0]x + $B)^{$EQNS[3]}}\\
+& = &  \frac{x^{$nn}($EQNS[6]x + $EQNS[5])}{($EQNS[0]x + $B)^{$mmm}}
+\end{array}
+\]
+</center> 
+</watex>"
+);
+''</EQN>
+
+
+<EQN $SOLUTIONS[$PROBLEM]>
+
+
+
+
+
+20. Equation of Tangent Line (Chain Rule only)* (5200357)
+
+<EQN>
+
+($PROBLEM) = pick(1,(1,2));
+
+if ( $PROBLEM == 0 )
+{
+$A = randnum(2,9,1);
+$B = randnum(2,5,1,$A);
+$SLOPE = fraction($A*$B - 1,$B);
+@EQNS = ($A*$B, $A*$B + 1, $A*$B + 2, $A*$B - 1, $A*$B + 1 - $B, $A, $B);
+$QUESTION = 'Find an equation for the tangent line to the curve \[y = ${A}x + \frac{$B}{x}\] at the point \[($B,$EQNS[1])\].';
+$ANSWER = '\[y = \frac{$EQNS[3]}{$B}x + 2\]';
+$WRONG1 = '\[y = \frac{$EQNS[1]}{$B}x\]';
+$WRONG2 = '\[y = \frac{1}{$B}x + $EQNS[0]\]';
+$WRONG3 = '\[y = -\frac{1}{$B}x + $EQNS[2]\]';
+$WRONG4 = '\[y = x + $EQNS[4]\]';
+}
+elsif ( $PROBLEM == 1 )
+{
+$A = randnum(3,4,1);
+$B = randnum(1,4,1,$A);
+$X = $B + 2;
+$Y = $A*($B+1)*($B+1);
+$SLOPE = -1*$A*$B*($B+1);
+@err = pick(4,$SLOPE-4,$SLOPE-3,$SLOPE-2,$SLOPE-1,$SLOPE+1,$SLOPE+2,$SLOPE+3,$SLOPE+4,$SLOPE+5);
+@EQNS = (2*$A, -2*$B, -4*$A*$B, 2*($B+1));
+$QUESTION = 'Find an equation for the tangent line to the curve \[y = $A\left(\frac{x + $B}{x - $B}\right)^2\] at the point \[($X,$Y)\].';
+$ANSWER = '\[y - $Y = $SLOPE(x - $X)\]';
+$WRONG1 = '\[y - $Y = $err[0](x - $X)\]';
+$WRONG2 = '\[y - $Y = $err[1](x - $X)\]';
+$WRONG3 = '\[y - $Y = $err[2](x - $X)\]';
+$WRONG4 = '\[y - $Y = $err[3](x - $X)\]';
+}
+elsif ( $PROBLEM == 2 )
+{
+$X = randnum(2,4,1);
+$XX = $X*$X;
+$B = randnum(2,4,1,$A);
+$BXX = $B*$X*$X;
+$C = randnum(2,7,1,sqrt($BXX));
+$CC = $C*$C;
+$D = abs($C*$C - $B*$X*$X);
+$SIGN = '+';
+if ( $C*$C - $B*$X*$X < 0 ){$SIGN = '-'}
+$Y = $X*$C;
+$SLOPE = fraction($CC + $BXX,$C);
+@err = pick(4, $SLOPE-4, $SLOPE-3, $SLOPE-2, $SLOPE-1, $SLOPE+1, $SLOPE+2, $SLOPE+3, $SLOPE+4, $SLOPE+5);
+@EQNS = ($B);
+$QUESTION = 'Find an equation for the tangent line to the curve \[y = x\sqrt{${B}x^2 $SIGN $D}\] at the point \[($X,$Y)\].';
+$ANSWER = '\[y - $Y = $SLOPE(x - $X)\]';
+$WRONG1 = '\[y - $Y = $err[0](x - $X)\]';
+$WRONG2 = '\[y - $Y = $err[1](x - $X)\]';
+$WRONG3 = '\[y - $Y = $err[2](x - $X)\]';
+$WRONG4 = '\[y - $Y = $err[3](x - $X)\]';
+}
+''</EQN>
+
+<watex><EQN $QUESTION></watex>
+
+<_>
+
+<watex><EQN $ANSWER></watex>
+<watex><EQN $WRONG1></watex>
+<watex><EQN $WRONG2></watex>
+<watex><EQN $WRONG3></watex>
+<watex><EQN $WRONG4></watex>
+
+<EQN>
+
+@SOLUTIONS = (
+"<watex>
+If we rewrite \[y = $EQNS[5]x + \frac{$B}{x}\] as \[ y = $EQNS[5]x + $EQNS[6]x^{-1}\], then we can compute its derivative as follows.
+<br><br>
+<center>\[
+\begin{array}{rcl}
+y' & = & $A + $B(-1)x^{-2} \\
+& = & $A - \frac{$B}{x^2}
+\end{array}
+\]</center>
+<br>
+Now plug in \[x = $B\].
+<br><br>
+<center>\[
+\begin{array}{rcl}
+y'($B) & = & $A - \frac{$B}{$B^2} \\
+& = & $A - \frac{1}{$B} \\
+& = & \frac{$A*$B - 1}{$B} \\
+& = & \frac{$EQNS[3]}{$B}
+\end{array}
+\]</center>
+<br>
+We now know that the slope of the tangent line is \[\frac{$EQNS[3]}{$B}\].  Using the point-slope equation of a line (i.e., \[y - b = m(x - a)\] where \[m\] is the slope of the line that goes through the point \[(a,b)\]), the equation of the tangent line is given by the following.
+<br><br>
+<center>\[
+\begin{array}{rcl}
+y - $EQNS[1] & = & \frac{$EQNS[3]}{$B}(x - $B) \\
+& = & \frac{$EQNS[3]}{$B}x - $EQNS[3]
+\end{array}
+\]</center>
+<br>
+Adding \[$EQNS[1]\] to both sides yields
+<br><br>
+<center>\[y  = \frac{$EQNS[3]}{$B}x + 2\]</center>
+</watex>",
+
+"<watex>
+To compute the derivative of the above function, use the general power rule (which includes the chain rule).
+<br><br>
+<center>\[
+\begin{array}{rcl}
+y' & = & $A*2\left(\frac{x + $B}{x - $B}\right)*\frac{d}{dx}\left(\frac{x + $B}{x - $B}\right) \\
+& = & $EQNS[0]\left(\frac{x + $B}{x - $B}\right)*\left(\frac{1*(x - $B) - (x + $B)*1}{(x - $B)^2}\right) \\
+& = & $EQNS[0]\left(\frac{x + $B}{x - $B}\right)*\left(\frac{x - $B - x - $B}{(x - $B)^2}\right) \\
+& = & $EQNS[0]\left(\frac{x + $B}{x - $B}\right)*\left(\frac{$EQNS[1]}{(x - $B)^2}\right) \\
+& = & $EQNS[2]\frac{x + $B}{(x - $B)^3}
+\end{array}
+\]</center>
+<br>
+Now plug in \[x = $X\].
+<br><br>
+<center>\[
+\begin{array}{rcl}
+y'($X) & = & $EQNS[2]*\frac{$X + $B}{($X - $B)^3} \\
+& = & $EQNS[2]*\frac{$EQNS[3]}{2^3} \\
+& = & $SLOPE
+\end{array}
+\]</center>
+<br>
+We now know that the slope of the tangent line is \[$SLOPE\].  Using the point-slope equation of a line (i.e., \[y - b = m(x - a)\] where \[m\] is the slope of the line that goes through the point \[(a,b)\]), the equation of the tangent line is given by the following.
+<br><br>
+<center>\[
+\begin{array}{rcl}
+y - $Y & = & $SLOPE(x - $X) 
+\end{array}
+\]</center>
+</watex>",
+
+"<watex>
+To compute the derivative of the above function, start by using the product rule.
+<br><br>
+<center>\[
+\begin{array}{rcl}
+y' & = & \sqrt{$EQNS[0]x^2 $SIGN $D} + x \left(\frac{1}{2}\right)($EQNS[0]x^2 $SIGN $D)^{-1/2}$B*2x\\
+& = & \sqrt{$EQNS[0]x^2 $SIGN $D} + \frac{$EQNS[0]x^2}{\sqrt{$EQNS[0]x^2 $SIGN $D}}
+\end{array}
+\]</center>
+<br>
+Now plug in \[x = $X\].
+<br><br>
+<center>\[
+\begin{array}{rcl}
+y'($X) & = & \sqrt{$B*$X^2 $SIGN $D} + \frac{$B*$X^2}{\sqrt{$B*$X^2 $SIGN $D}} \\
+& = & \sqrt{$BXX $SIGN $D} + \frac{$BXX}{\sqrt{$BXX $SIGN $D}} \\
+& = & \sqrt{$CC} + \frac{$BXX}{\sqrt{$CC}} \\
+& = & $C + \frac{$BXX}{$C} \\
+& = & $SLOPE
+\end{array}
+\]</center>
+<br>
+We now know that the slope of the tangent line is \[$SLOPE\].  Using the point-slope equation of a line (i.e., \[y - b = m(x - a)\] where \[m\] is the slope of the line that goes through the point \[(a,b)\]), the equation of the tangent line is given by the following.
+<br><br>
+<center>\[
+\begin{array}{rcl}
+y - $Y & = & $SLOPE(x - $X) 
+\end{array}
+\]</center>
+</watex>"
+);
+''</EQN>
+
+<watex>
+<hr><b>General Procedure for Finding the Equation of a Tangent Line:</b><br>
+In order to find the equation of the line tangent to the curve \[y = f(x)\] at the point \[(a,b)\], it's enough to find the slope of the curve at \[x = a\].  To do so, compute \[f'(x)\] and then plug in \[x = a\].  The slope of the tangent line is \[f'(a)\].  Therefore, using the point-slope equation of a line, the equation of the tangent line can be written as
+<br><br><center>y - b = f'(a)(x-a)</center>
+<br><hr><br> 
+</watex>
+<EQN $SOLUTIONS[$PROBLEM]>
+
+
+
+
+
+21. Marginal Functions* (3555288)
+
+Question
+<EQN>
+
+($PROBLEM) = pick(1,0,1,2);
+$UNIT = '$';
+
+if ( $PROBLEM == 0 )
+{
+$A = randnum(110,190,10);
+$B = 10*$A - 1000 + randnum(50,950,50,$A);
+$ANS = 4000 - 20*$A + $B;
+@err = pick(4,-4,-3,-2,-1,2,3,4,5,6,7,8,9,10);
+
+@EQNS = ($A, $B, 2*$A, 20*$A);
+$QUESTION = 'The weekly demand for Xbox \it{Math-Hero} video games is given by
+<br><br>
+<center>\[p = x^3 - ${A}x + $B\]</center>
+<br>
+where \[x\] is the number of Xbox video games produced and sold, and \[p\] is in dollars. Using the \it{Marginal Revenue} function, \[R\'(x)\], approximate the \it{marginal revenue} when 10 \it{Math-Hero} video games have been produced and sold.';
+$ANSWER = commas($ANS);
+$WRONG1 = commas($ANS + 25*$err[0]);
+$WRONG2 = commas($ANS + 25*$err[1]);
+$WRONG3 = commas($ANS + 25*$err[2]);
+$WRONG4 = commas($ANS + 25*$err[3]);
+}
+elsif ( $PROBLEM == 1 )
+{
+($TITLE) = pick(1,'The Tangent Menace', 'Attack of the Limits', 'Revenge of the Quotient', 'A New Slope', 'The Derivative Strikes Back', 'Return of the Calculus', 'The Force Multiplies', 'The Last Integral', 'The Rise Over Run');
+$B = randnum(3,9,1);
+$A = $B*randnum(50,90,10);
+$C = 500*randnum(3,9,1);
+$XD = 2*$B;
+$DD = commas($XD*1000);
+$AB = $A*$B;
+$ANS = $C - $A/$B;
+@err = pick(4,-4,-3,-2,-1,2,3,4,5,6,7,8,9,10);
+
+@EQNS = ($A,$C,$A/$B);
+$QUESTION = 'The weekly demand for \it{Math Wars - $TITLE} video games is given by
+<br><br>
+<center>\[p = \frac{$A}{x - $B} + $C\]</center>
+<br>
+where \[x\] is the number of thousands of video games produced and sold, and \[p\] is in dollars. Using the \it{Marginal Revenue} function, \[R\'(x)\], approximate the \it{marginal revenue} when \[$DD\] video games have been produced and sold.';
+$ANSWER = commas($ANS);
+$WRONG1 = commas($ANS + 25*$err[0]);
+$WRONG2 = commas($ANS + 25*$err[1]);
+$WRONG3 = commas($ANS + 25*$err[2]);
+$WRONG4 = commas($ANS + 25*$err[3]);
+}
+elsif ( $PROBLEM == 2 )
+{
+$UNIT = '';
+
+$A = randnum(35,65,5);
+$B = randnum(1,9,1,5)/10;
+$C = randnum(2,8,1);
+$D = randnum(11,50,1);
+$E = randnum(10,20,10);
+$ANS = $A - $B*2*$E - $C;
+$PROFIT = $E*($A - $B*$E) - $C*$E - $D;
+@err = pick(4,-4,-3,-2,-1,2,3,4,5,6,7,8,9,10);
+
+@EQNS = ($A, $B, $C, $A-$C, 2*$B, 2*$B*$E);
+$QUESTION = 'If the \it{demand} function for math self-help videos is given by \[$A - ${B}x\], and the \it{total cost} function to manufacture the videos is given by \[${C}x + $D\], evaluate the \it{marginal profit} function at \[x = $E\].';
+$ANSWER = $ANS;
+$WRONG1 = $ANS + $err[0];
+$WRONG2 = $ANS + $err[1];
+$WRONG3 = $ANS + $err[2];
+$WRONG4 = $ANS + $err[3];
+#$WRONG1 = $PROFIT;
+#$WRONG2 = $A - $B*$E - $C*$E - $D;
+#$WRONG3 = -($B+$C);
+#$WRONG4 = $PROFIT + 2*$D;
+}
+''</EQN>
+
+<watex><EQN $QUESTION></watex>
+
+<_>
+
+Answer
+<watex><EQN $UNIT><EQN $ANSWER></watex>
+<watex><EQN $UNIT><EQN $WRONG1></watex>
+<watex><EQN $UNIT><EQN $WRONG2></watex>
+<watex><EQN $UNIT><EQN $WRONG3></watex>
+<watex><EQN $UNIT><EQN $WRONG4></watex>
+
+<EQN>
+
+@SOLUTIONS = (
+"<watex>
+Recall that revenue is equal to the number of units sold times the price per unit.  Therefore
+<br><br>
+<center>\[
+\begin{array}{rcl}
+R(x) & = & x*p \\
+& = & x*(x^3 - $EQNS[0]x + $B)   \\
+& = & x^4 - $EQNS[0]x^2 + $EQNS[1]x 
+\end{array}
+\]
+</center> 
+<br>
+and the marginal revenue function, \[R'(x)\], is given by
+<br><br>
+<center>\[
+\begin{array}{rcl}
+R'(x) & = & 4x^3 - 2*$EQNS[0]x + $B  \\
+& = & 4x^3 - $EQNS[2]x + $B
+\end{array}
+\]</center>
+<br>
+To approximate the \it{marginal revenue} when 10 \it{Math-Hero} video games have been produced and sold, plug in \[x = 10\] into \[R'(x)\].
+<br><br>
+<center>\[
+\begin{array}{rcl}
+R'(10) & = & 4*10^3 - $EQNS[2]*10 + $B  \\
+& = & 4000 - $EQNS[3] + $B \\
+& = & $ANS
+\end{array}
+\]</center>
+</watex>",
+
+"<watex>
+Recall that revenue is equal to the number of units sold times the price per unit.  Therefore
+<br><br>
+<center>\[
+\begin{array}{rcl}
+R(x) & = & x*p \\
+& = & x*\left(\frac{$A}{x - $B} + $C\right)   \\
+& = & \frac{$EQNS[0]x}{x - $B} + $EQNS[1]x 
+\end{array}
+\]
+</center> 
+<br>
+and the marginal revenue function, \[R'(x)\], is given by
+<br><br>
+<center>\[
+\begin{array}{rcl}
+R'(x) & = & \frac{$A(x - $B) - $EQNS[0]x}{(x - $B)^2} + $C  \\
+& = & \frac{$EQNS[0]x - $A*$B - $EQNS[0]x}{(x - $B)^2} + $C \\
+& = & \frac{-$A*$B}{(x - $B)^2} + $C
+\end{array}
+\]</center>
+<br>
+To approximate the \it{marginal revenue} when \[$DD\] video games have been produced and sold, plug in \[x = $XD\] into \[R'(x)\].
+<br><br>
+<center>\[
+\begin{array}{rcl}
+R'($XD) & = & \frac{-$A*$B}{($XD - $B)^2} + $C  \\
+& = & \frac{-$A*$B}{$B^2} + $C  \\
+& = & \frac{-$A}{$B} + $C  \\
+& = & -$EQNS[2] + $C  \\
+& = & $ANS
+\end{array}
+\]</center>
+</watex>",
+
+"<watex>
+Recall that profit is the difference between revenue and cost.  Since we are given the cost function, but not revenue, we must calculate revenue using the given demand function.  In particular, revenue is the quantity demanded, \[x\], times the price per unit, \[d(x)\], which is the demand function.
+<br><br>
+<center>\[ 
+\begin{array}{rcl}
+R(x) & = & x*d(x) \\
+& = & x($A-$EQNS[1]x) \\
+& = & $EQNS[0]x - $EQNS[1]x^2
+\end{array}\]
+</center>
+<br>
+Now we can calculate the profit function, \[P(x)\], and the marginal profit function, \[P'(x)\].
+<br><br>
+<center>\[ 
+\begin{array}{rcl}
+P(x) & = & R(x) - C(x) \\
+& = & ($EQNS[0]x - $EQNS[1]x^2) - ($EQNS[2]x + $D) \\
+& = & $EQNS[0]x - $EQNS[1]x^2 - $EQNS[2]x - $D \\
+& = & $EQNS[3]x - $EQNS[1]x^2 - $D \\
+\end{array}\]
+</center>
+<br><br>
+<center>\[ 
+\begin{array}{rcl}
+P'(x) & = & \frac{d}{dx} ($EQNS[3]x - $EQNS[1]x^2 - $D) \\
+& = & $EQNS[3] - $B*2x  \\
+& = & $EQNS[3] - $EQNS[4]x 
+\end{array}\]
+</center>
+<br>
+Plugging in \[x = $E\] yields
+<br><br>
+<center>\[ 
+\begin{array}{rcl}
+P'($E) & = & $EQNS[3] - $EQNS[4]*$E \\
+& = & $EQNS[3] - $EQNS[5]  \\
+& = & $ANS
+\end{array}\]
+</center>
+</watex>"
+);
+''</EQN>
+
+
+<EQN $SOLUTIONS[$PROBLEM]>
+
+
+
+
+
+
+22. Marginal Functions (Conceptual)* (4808210)
+
+Question
+<EQN>
+
+($PROBLEM) = pick(1,0,1,2);
+($TITLE) = pick(1,'Winning at Love - A Strategy Guide to the Game of Tennis','Hager v. Chegg - How to Teach Math in the Internet Age');
+
+$units = randnum(20,90,10);
+$nextUnit = $units + 1;
+
+if ( $PROBLEM == 0 )
+{
+$marginalCost = randnum(50,75,1);
+$marginalRevenue = $marginalCost + randnum(100,125,1);
+$marginalProfit = $marginalRevenue - $marginalCost;
+@EQNS = ();
+$QUESTION = 'Let \[C(x)\] represent the cost and \[R(x)\] the revenue, in dollars, associated with producing and selling \[x\] units of Dr. Little\'s \it{Winning at Love - A Strategy Guide to the Game of Tennis}. If \[C\'($units) = $marginalCost\] and \[R\'($units) = $marginalRevenue\], which one of the following statements is true?';
+$ANSWER = 'Producing and selling the \[$nextUnit\]st item will \it{increase} total profits.';
+$WRONG1 = 'Producing and selling the \[$nextUnit\]st item will \it{decrease} total profits.';
+$WRONG2 = 'Producing and selling the \[$nextUnit\]st item will have little to no effect on total profits.';
+$WRONG3 = 'Since marginal revenue is greater than marginal cost, total profits are \it{positive} when \[$units\] items have been sold.';
+$WRONG4 = 'Since marginal revenue is greater than marginal cost, total profits are \it{negative} when \[$units\] items have been sold.';
+}
+elsif ( $PROBLEM == 1 )
+{
+$marginalRevenue = randnum(50,75,1);
+$marginalCost = $marginalRevenue + randnum(100,125,1);
+$marginalProfit = $marginalCost - $marginalRevenue;
+@EQNS = ();
+$QUESTION = 'Let \[C(x)\] represent the cost and \[R(x)\] the revenue, in dollars, associated with producing and selling \[x\] units of Dr. Little\'s \it{Winning at Love - A Strategy Guide to the Game of Tennis}. If \[C\'($units) = $marginalCost\] and \[R\'($units) = $marginalRevenue\], which one of the following statements is true?';
+$ANSWER = 'Producing and selling the \[$nextUnit\]st item will \it{decrease} total profits.';
+$WRONG1 = 'Producing and selling the \[$nextUnit\]st item will \it{increase} total profits.';
+$WRONG2 = 'Producing and selling the \[$nextUnit\]st item will have little to no effect on total profits.';
+$WRONG3 = 'Since marginal cost is greater than marginal revenue, total profits are \it{positive} when \[$units\] items have been sold.';
+$WRONG4 = 'Since marginal cost is greater than marginal revenue, total profits are \it{negative} when \[$units\] items have been sold.';}
+elsif ( $PROBLEM == 2 )
+{
+$marginalCost = randnum(50,75,1,$units);
+$marginalRevenue = $marginalCost + 0;
+$marginalProfit = 0;
+@EQNS = ();
+$QUESTION = 'Let \[C(x)\] represent the cost and \[R(x)\] the revenue, in dollars, associated with producing and selling \[x\] units of Dr. Little\'s \it{Winning at Love - A Strategy Guide to the Game of Tennis}. If \[C\'($units) = $marginalCost\] and \[R\'($units) = $marginalRevenue\], which one of the following statements is true?';
+$ANSWER = 'Producing and selling the \[$nextUnit\]st item will have little to no effect on total profits.';
+$WRONG1 = 'Producing and selling the \[$nextUnit\]st item will \it{increase} total profits.';
+$WRONG2 = 'Producing and selling the \[$nextUnit\]st item will \it{decrease} total profits.';
+$WRONG3 = 'Since marginal cost equals marginal revenue, total profits are \it{positive} when \[$units\] items have been sold.';
+$WRONG4 = 'Since marginal cost equals marginal revenue, total profits are \it{negative} when \[$units\] items have been sold.';}
+''</EQN>
+
+<watex><EQN $QUESTION></watex>
+
+<_>
+
+Answer
+<watex><EQN $ANSWER></watex>
+<watex><EQN $WRONG1></watex>
+<watex><EQN $WRONG2></watex>
+<watex><EQN $WRONG3></watex>
+<watex><EQN $WRONG4></watex>
+
+<EQN>
+
+@SOLUTIONS = (
+"<watex>
+Recall that the profit function, \[P(x)\], is given by
+<br><br>
+<center>\[
+P(x) = R(x) - C(x)
+\]</center>
+<br>
+and the marginal profit function, \[P'(x)\], is given by
+<br><br>
+<center>\[
+P'(x) = R'(x) - C'(x).
+\]</center>
+<br>
+When \[x = $units\], 
+<br><br>
+<center>\[
+\begin{array}{rcl}
+P'($units) 
+& = & R'($units) - C'($units) \\
+& = & $marginalRevenue - $marginalCost  \\
+& = & $marginalProfit
+\end{array}\]</center>
+<br>
+Therefore, when the \[$nextUnit\]st item is produced and sold, it will \it{increase} total profits by about \[$marginalProfit\] dollars.
+</watex>",
+
+"<watex>
+Recall that the profit function, \[P(x)\], is given by
+<br><br>
+<center>\[
+P(x) = R(x) - C(x)
+\]</center>
+<br>
+and the marginal profit function, \[P'(x)\], is given by
+<br><br>
+<center>\[
+P'(x) = R'(x) - C'(x).
+\]</center>
+<br>
+When \[x = $units\], 
+<br><br>
+<center>\[
+\begin{array}{rcl}
+P'($units) 
+& = & R'($units) - C'($units) \\
+& = & $marginalRevenue - $marginalCost  \\
+& = & -$marginalProfit
+\end{array}\]</center>
+<br>
+Therefore, when the \[$nextUnit\]st item is produced and sold, it will \it{decrease} total profits by about \[$marginalProfit\] dollars.
+</watex>",
+
+"<watex>
+Recall that the profit function, \[P(x)\], is given by
+<br><br>
+<center>\[
+P(x) = R(x) - C(x)
+\]</center>
+<br>
+and the marginal profit function, \[P'(x)\], is given by
+<br><br>
+<center>\[
+P'(x) = R'(x) - C'(x).
+\]</center>
+<br>
+When \[x = $units\], 
+<br><br>
+<center>\[
+\begin{array}{rcl}
+P'($units) 
+& = & R'($units) - C'($units) \\
+& = & $marginalRevenue - $marginalCost  \\
+& = & $marginalProfit
+\end{array}\]</center>
+<br>
+Therefore, when the \[$nextUnit\]st item is produced and sold, it will have little to no effect on total profits.
+</watex>"
+);
+''</EQN>
+
+<EQN $SOLUTIONS[$PROBLEM]>
+
+
+
+
+
+23. Marginal Average Function* (3555395)
+
+Question
+<EQN>
+
+($PROBLEM) = pick(1,0,1);
+
+
+if ( $PROBLEM == 0 )
+{
+$A = randnum(3,9,1);
+$B = randnum(10,50,10);
+$C = randnum(40,90,10);
+$E = randnum(2,5,1);
+$EE = 1000 * $E;
+$D = $E*$E*100;
+$ANS = $A*2*$E - $B - $D/$E**2;
+$direction = 'decrease';
+if ($ANS > 0) { $direction = 'increase' };
+$AANS = abs($ANS);
+@err = pick(4,$ANS-20,$ANS-15,$ANS-10,$ANS-5,$ANS+5,$ANS+10,$ANS+15,$ANS+20,$ANS+25);
+
+@EQNS = ($A,$B,$C,2*$A,2*$A*$E, $D/($E*$E));
+
+$QUESTION = 'The daily cost (in dollars) of producing LG ultra high definition televisions is given by
+<br><br><center>\[C(x) = $EQNS[0]x^3 - $EQNS[1]x^2 + $EQNS[2]x + $D\]</center><br>
+where \[x\] denotes the number of thousands of televisions produced in a day. Using the \it{Marginal Average Cost} function, \[\overline{C}\'(x)\], approximate the \it{marginal average cost} when \[$EE\] televisions have been produced.';
+
+$ANSWER = '\[$ANS\]';
+$WRONG1 = '\[$err[0]\]';
+$WRONG2 = '\[$err[1]\]';
+$WRONG3 = '\[$err[2]\]';
+$WRONG4 = '\[$err[3]\]';
+}
+elsif ( $PROBLEM == 1 )
+{
+$S = randnum(2,5,1);
+$SS = $S*$S;
+$A = 100*$SS;
+$B = 100*randnum(2,9,1);
+$C = randnum(2,9,1);
+$D = 1000*randnum(2,9,1);
+$E = 10*randnum(2,9,1);
+
+@EQNS = ($A,$B,$C,$D,$E,$B+$E,2*$C,2*$C*$S);
+
+$QUESTION = 'The daily cost (in dollars) of producing Samsung VR headsets is given by
+<br><br><center>\[C(x) = $EQNS[0] + $EQNS[1]x^2 + $EQNS[2]x^3\]</center><br>
+where \[x\] denotes the number of headsets produced in a day and the total revenue in dollars is given by
+<br><br><center>\[R(x) = $EQNS[3]x - $EQNS[4]x^2\]</center><br>
+Using the \it{marginal average profit} function, \[\overline{P}\'(x)\], approximate the \it{marginal average profit} when \[$S\] headsets have been produced and sold.';
+
+$ANS = -1*($E+$B) - 2*$C*$S + $A/$SS;
+$direction = 'decrease';
+if ($ANS > 0) { $direction = 'increase' };
+$AANS = abs($ANS);
+@err = pick(4,$ANS - 40,$ANS - 30,$ANS - 20,$ANS - 10,$ANS + 10,$ANS + 20,$ANS + 30,$ANS + 40,$ANS + 50);
+
+$ANSWER = '\[$ANS\]';
+$WRONG1 = '\[$err[0]\]';
+$WRONG2 = '\[$err[1]\]';
+$WRONG3 = '\[$err[2]\]';
+$WRONG4 = '\[$err[3]\]';
+
+}
+elsif ( $PROBLEM == 2 )
+{
+}
+''</EQN>
+
+<watex><EQN $QUESTION></watex>
+
+<_>
+
+
+
+Answer
+<watex><EQN $ANSWER></watex>
+<watex><EQN $WRONG1></watex>
+<watex><EQN $WRONG2></watex>
+<watex><EQN $WRONG3></watex>
+<watex><EQN $WRONG4></watex>
+
+<EQN>
+
+@SOLUTIONS = (
+"<watex>
+The average cost function, \[\overline{C}(x)\], is given by
+<br><br>
+<center>\[
+\begin{array}{rcl}
+\overline{C}(x) 
+& = & \frac{C(x)}{x} \\
+& = & \frac{$EQNS[0]x^3 - $EQNS[1]x^2 + $EQNS[2]x + $D}{x} \\
+& = & $EQNS[0]x^2 - $EQNS[1]x + $C + \frac{$D}{x}
+\end{array}
+\]</center>
+<br>
+Therefore, the marginal average cost function (i.e., the derivative of the average cost function) is given by
+<br><br>
+<center>\[
+\begin{array}{rcl}
+\overline{C}'(x)  
+& = & \frac{d}{dx} \left($EQNS[0]x^2 - $EQNS[1]x + $C + \frac{$D}{x}\right) \\
+& = & $EQNS[0]*2x - $EQNS[1]  - \frac{$D}{x^2} \\
+& = & $EQNS[3]x - $EQNS[1]  - \frac{$D}{x^2} 
+\end{array}
+\]</center> 
+<br>
+And finally, to approximate the \it{marginal average cost} when \[$EE\] televisions have been produced and sold, plug \[x = $E\] into the marginal average cost function.
+<br><br>
+<center>\[
+\begin{array}{rcl}
+\overline{C}'($E) 
+& = & $EQNS[3]*$E - $B  - \frac{$D}{$E^2}  \\
+& = & $EQNS[4] - $B - $EQNS[5] \\
+& = & $ANS 
+\end{array}
+\]</center>
+<br>
+This means that when the level of production is \[$EE\] televisions, the average cost of producing a television will \[$direction\] by approximately \[$AANS\] dollars if the level of production is increased by a 1000 televisions.
+</watex>",
+
+"<watex>
+First, find the total profit function.
+<br><br>
+<center>\[
+\begin{array}{rcl}
+P(x) 
+& = & R(x) - C(x) \\
+& = & $EQNS[3]x - $EQNS[4]x^2 - ($EQNS[0] + $EQNS[1]x^2 + $EQNS[2]x^3) \\
+& = & $EQNS[3]x - $EQNS[4]x^2 - $EQNS[0] - $EQNS[1]x^2 - $EQNS[2]x^3 \\
+& = & -$EQNS[0] + $EQNS[3]x - $EQNS[5]x^2 - $EQNS[2]x^3 
+\end{array}
+\]</center>
+<br>
+Next, compute the average profit function, \[\overline{P}(x)\].
+<br><br>
+<center>\[
+\begin{array}{rcl}
+\overline{P}(x) 
+& = & \frac{P(x)}{x} \\
+& = & \frac{-$EQNS[0] + $EQNS[3]x - $EQNS[5]x^2 - $EQNS[2]x^3}{x} \\
+& = & -\frac{$EQNS[0]}{x} + $EQNS[3] - $EQNS[5]x - $EQNS[2]x^2
+\end{array}
+\]</center>
+<br>
+Therefore, the marginal average profit function (i.e., the derivative of the average profit function) is given by
+<br><br>
+<center>\[
+\begin{array}{rcl}
+\overline{P}'(x)  
+& = & \frac{d}{dx} \left(-\frac{$EQNS[0]}{x} + $EQNS[3] - $EQNS[5]x - $EQNS[2]x^2\right) \\
+& = & \frac{$EQNS[0]}{x^2} + 0 - $EQNS[5] - $EQNS[2]\cdot2x \\
+& = & \frac{$EQNS[0]}{x^2} - $EQNS[5] - $EQNS[6]x
+\end{array}
+\]</center> 
+<br>
+And finally, to approximate the \it{marginal average profit} when \[$S\] headsets have been produced and sold, plug \[x = $S\] into the marginal average profit function.
+<br><br>
+<center>\[
+\begin{array}{rcl}
+\overline{P}'($S) 
+& = & \frac{$EQNS[0]}{$S^2} - $EQNS[5] - $EQNS[6]\cdot $S  \\
+& = & \frac{$EQNS[0]}{$SS} - $EQNS[5] - $EQNS[7]  \\
+& = & $ANS 
+\end{array}
+\]</center>
+<br>
+This means that when the level of production and sales is \[$S\] headsets, the average profit will \[$direction\] by approximately \[$AANS\] dollars if production and sales is increased by one headset.
+</watex>",
+
+"<watex>
+</watex>"
+);
+''</EQN>
+
+
+<EQN $SOLUTIONS[$PROBLEM]>
+
+
+
+
+
+
+24. Elasticity* (3419020)
+
+Question
+<EQN>
+
+($PROBLEM) = pick(1,0,1,2,3);
+
+if ( $PROBLEM == 0 )
+{
+$UNITS = '';
+$A = randnum(3,8,1);
+$B = randnum(16,48,8);
+$P = randnum(1,7,1)*$B/8;
+$ANS = $P / ($B - $P);
+if ($ANS == 1/7){ @err = pick(4,'1/3','3/5','1','5/3','3','7'); }
+elsif ($ANS == 1/3){ @err = pick(4,'1/7','3/5','1','5/3','3','7'); }
+elsif ($ANS == 3/5){ @err = pick(4,'1/7','1/3','1','5/3','3','7'); }
+elsif ($ANS == 1){ @err = pick(4,'1/7','1/3','3/5','5/3','3','7'); }
+elsif ($ANS == 5/3){ @err = pick(4,'1/7','1/3','3/5','1','3','7'); }
+elsif ($ANS == 3){ @err = pick(4,'1/7','1/3','3/5','1','5/3','7'); }
+elsif ($ANS == 7){ @err = pick(4,'1/7','1/3','3/5','1','5/3','3'); }
+else{ @err = pick(4,'1/7','1/3','3/5','1','5/3',3,7); }
+@EQNS = ($A*$B, $B - $P);
+$QUESTION = 'Given the demand equation \[p + \frac{x}{$A} = $B\], where \[p\] represents the price in dollars and \[x\] the number of units, determine the \it{elasticity of demand} when the price \[p\] is equal to $\[$P\]. ';
+$ANSWER = fraction($P,$B-$P);
+$WRONG1 = $err[0];
+$WRONG2 = $err[1];
+$WRONG3 = $err[2];
+$WRONG4 = $err[3];
+}
+elsif ( $PROBLEM == 1 )
+{
+$UNITS = '$';
+$A = randnum(3,9,1);
+$B = randnum(20,60,10);
+$ANS = $A*$B/2;
+@err = pick(4,-4,-3,-2,-1,2,3,4,5,6,7,8,9,10);
+@EQNS = ($A*$B);
+$QUESTION = 'Given the demand equation \[x + \frac{p}{$A} - $B = 0\], where \[p\] represents the price in dollars and \[x\] the number of units, determine the value of \[p\] where the \it{elasticity of demand} is \it{unitary}. ';
+$ANSWER = $ANS;
+$WRONG1 = $ANS + 5*$err[0];
+$WRONG2 = $ANS + 5*$err[1];
+$WRONG3 = $ANS + 5*$err[2];
+$WRONG4 = $ANS + 5*$err[3];
+}
+elsif ( $PROBLEM == 2 )
+{
+$UNITS = '$';
+($n) = pick(1,2,3,4,5);
+$A = $n*randnum(2,9,1);
+$An = $A/$n; $AA = $A + $An;
+$B = ($n+1)*$An*randnum(8,12,1);
+
+@err = pick(4,-4,-3,-2,-1,1,2,3,4,5,6,7,8,9,10);
+$nn = $n - 1;
+
+@EQNS = ($A, $An, $AA);
+$QUESTION = 'Given the demand equation \[x^{$n} + ${A}p = $B\], where \[p\] represents the price in dollars and \[x\] the number of units, determine the value of \[p\] where the \it{elasticity of demand} is \it{unitary}.';
+$ANSWER = $B/$AA;
+$WRONG1 = $ANSWER + $err[0];
+$WRONG2 = $ANSWER + $err[1];
+$WRONG3 = $ANSWER + $err[2];
+$WRONG4 = $ANSWER + $err[3];
+}
+elsif ( $PROBLEM == 3 )
+{
+$UNITS = '';
+$C = randnum(2,5,1);
+$A = $C*randnum(2,5,1);
+$B = $C*randnum(6,10,1);
+($P) = pick(1,2,5,10);
+$ANS = $B / ($A*$P + $B);
+if ($ANS == 1/7){ @err = pick(4,'1/3','3/5','1','5/3','3','7'); }
+elsif ($ANS == 1/3){ @err = pick(4,'1/7','3/5','1','5/3','3','7'); }
+elsif ($ANS == 3/5){ @err = pick(4,'1/7','1/3','1','5/3','3','7'); }
+elsif ($ANS == 1){ @err = pick(4,'1/7','1/3','3/5','5/3','3','7'); }
+elsif ($ANS == 5/3){ @err = pick(4,'1/7','1/3','3/5','1','3','7'); }
+elsif ($ANS == 3){ @err = pick(4,'1/7','1/3','3/5','1','5/3','7'); }
+elsif ($ANS == 7){ @err = pick(4,'1/7','1/3','3/5','1','5/3','3'); }
+else{ @err = pick(4,'1/7','1/3','3/5','1','5/3',3,7); }
+@EQNS = ($A,$B,$A*$P,$A*$P + $B);
+$QUESTION = 'Given the demand equation \[x = $A + \frac{$B}{p}\], where \[p\] represents the price in dollars and \[x\] the number of units, determine the \it{elasticity of demand} when the price \[p\] is equal to $\[$P\]. ';
+$ANSWER = fraction($B,$A*$P + $B);
+$WRONG1 = fraction($B,$A*($P+1) + $B);
+$WRONG2 = fraction($B,$A*($P-1) + $B);
+$WRONG3 = fraction($B,$A*($P+2) + $B);
+$WRONG4 = fraction($B,$A*($P-2) + $B);
+}
+''</EQN>
+
+<watex><EQN $QUESTION></watex>
+
+<_>
+
+Answer
+<watex><EQN $UNITS><EQN $ANSWER></watex>
+<watex><EQN $UNITS><EQN $WRONG1></watex>
+<watex><EQN $UNITS><EQN $WRONG2></watex>
+<watex><EQN $UNITS><EQN $WRONG3></watex>
+<watex><EQN $UNITS><EQN $WRONG4></watex>
+
+<EQN>
+
+@SOLUTIONS = (
+"<watex>
+Recall that elasticity is given by
+<br><br>
+<center>\[E(p) = -\frac{p*f'(p)}{f(p)}\]</center>
+<br>
+where \[x = f(p)\] is the demand function (quantity demanded as a function of price).  In order to find \[f(p)\], we solve for \[x\] in the given demand equation (\[p + \frac{x}{$A} = $B\]).
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f(p) = x & = & $A*($B - p)\\
+& = & $EQNS[0] - ${A}p
+\end{array}
+\]</center>
+<br>
+and 
+<br><br>
+<center>\[f'(p) = -$A\].</center>
+<br> 
+We can now compute the elasticity function.
+<br><br>
+<center>\[
+\begin{array}{rcl}
+E(p)  & = & -\frac{p*(-$A)}{$A($B - p)} \\
+& = & \frac{p}{$B - p} 
+\end{array}
+\]</center> 
+<br>
+And finally, plug in \[p = $P\].
+<br><br>
+<center>\[
+\begin{array}{rcl}
+E($P)  & = & \frac{$P}{$B - $P} \\
+& = & \frac{$P}{$EQNS[1]} \\
+& = & $ANSWER
+\end{array}
+\]</center>
+</watex>",
+
+"<watex>
+Recall that elasticity is given by
+<center>\[E(p) = -\frac{p*f'(p)}{f(p)}\]</center>
+where \[x = f(p)\] is the demand function (quantity demanded as a function of price).  In order to find \[f(p)\], we solve for \[x\] in the given demand equation (\[x + \frac{p}{$A} - $B = 0\]).
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f(p) = x & = & $B - \frac{p}{$A}\\
+& = & $B - \frac{1}{$A}p
+\end{array}
+\]</center>
+<br>
+and 
+<br><br>
+<center>\[f'(p) = -\frac{1}{$A}\].</center>
+<br> 
+We can now compute the elasticity function.
+<br><br>
+<center>\[
+\begin{array}{rcl}
+E(p)  & = & -\frac{p*(-1/$A)}{$B - p/$A} \\
+& = & \frac{p}{$B - p/$A}*\frac{1}{$A} \\
+& = & \frac{p}{($B - p/$A)$A} \\
+& = & \frac{p}{$EQNS[0] - p}
+\end{array}
+\]</center> 
+<br>
+To determine the price where elasticity is unitary, set \[E(p) = 1\] and solve for \[p\].
+<br><br>
+<center>\[ \frac{p}{$EQNS[0] - p} = 1\]</center>
+<br>
+Multiplying both sides by \[$EQNS[0] - p\] yields
+<br><br>
+<center>\[ p = $EQNS[0] - p\]</center>
+<br>
+Add \[p\] to both sides.
+<br><br>
+<center>\[ 2p = $EQNS[0]\]</center>
+<br>
+And finally, divide both sides by 2.
+<br><br>
+<center>\[ p = $ANS\]</center>
+</watex>",
+
+"<watex>
+Recall that elasticity is given by
+<center>\[E(p) = -\frac{p*f'(p)}{f(p)}\]</center>
+where \[x = f(p)\] is the demand function (quantity demanded as a function of price).  In order to find \[f(p)\], we solve for \[x\] in the given demand equation (\[x^{$n} + $EQNS[0]p = $B\]).  
+<br><br>
+First, subtract \[$EQNS[0]p\] from both sides
+<br><br>
+<center>\[
+x^{$n} = $B - $EQNS[0]p
+\]</center>
+<br>
+and then raise both sides to the \[1/$n\] power.
+<br><br>
+<center>\[
+x = ($B - $EQNS[0]p)^{1/$n}
+\]</center>
+<br>
+Therefore
+<br><br>
+<center>\[
+f(p) = ($B - $EQNS[0]p)^{1/$n}
+\]</center>and 
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f'(p)
+& = & \frac{1}{$n}($B - $EQNS[0]p)^{1/$n - 1}*\frac{d}{dp}($B - $EQNS[0]p) \\
+& = & \frac{1}{$n}($B - $EQNS[0]p)^{-$nn/$n}*(-$A) \\
+& = & -\frac{$A}{$n($B - $EQNS[0]p)^{$nn/$n}} \\
+& = & -\frac{$An}{($B - $EQNS[0]p)^{$nn/$n}} \\
+\end{array}
+.\]</center>
+<br> 
+We can now compute the elasticity function.
+<br><br>
+<center>\[
+\begin{array}{rcl}
+E(p)  
+& = & -\frac{p*f'(p)}{f(p)} \\
+& = & - \frac{p*\left(-\frac{$An}{($B - $EQNS[0]p)^{$nn/$n}}\right)}{($B - $EQNS[0]p)^{1/$n}} \\
+& = & p*\left(\frac{$An}{($B - $EQNS[0]p)^{$nn/$n}}\right)\frac{1}{($B - $EQNS[0]p)^{1/$n}} \\
+& = & \frac{$EQNS[1]p}{($B - $EQNS[0]p)^{$nn/$n}}\cdot \frac{1}{($B - $EQNS[0]p)^{1/$n}} \\
+& = & \frac{$EQNS[1]p}{($B - $EQNS[0]p)^{$nn/$n}\cdot ($B - $EQNS[0]p)^{1/$n}} \\
+& = & \frac{$EQNS[1]p}{$B - $EQNS[0]p} \\ 
+\end{array}
+\]</center> 
+<br>
+To determine the price where elasticity is unitary, set \[E(p) = 1\] and solve for \[p\].
+<br><br>
+<center>\[ \frac{$EQNS[1]p}{$B - $EQNS[0]p} = 1\]</center>
+<br>
+Multiply both sides by \[$B - $EQNS[0]p\].
+<br><br>
+<center>\[ $EQNS[1]p = $B - $EQNS[0]p\]</center>
+<br>
+Add \[$EQNS[0]p\] to both sides.
+<br><br>
+<center>\[ $EQNS[2]p = $B\]</center>
+<br>
+And finally, divide both sides by \[$AA\].
+<br><br>
+<center>\[ p = $ANSWER\]</center>
+</watex>",
+
+"<watex>
+Recall that elasticity is given by
+<br><br>
+<center>\[E(p) = -\frac{p*f'(p)}{f(p)}\]</center>
+<br>
+where \[x = f(p)\] is the demand function (quantity demanded as a function of price).  Therefore, 
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f(p) = x 
+& = & $A + \frac{$B}{p} \\
+& = & $A + $EQNS[1]p^{-1}
+\end{array}
+\]</center>
+<br>
+and 
+<br><br>
+<center>\[f'(p) = -\frac{$B}{p^2}\].</center>
+<br> 
+We can now compute the elasticity function.
+<br><br>
+<center>\[
+\begin{array}{rcl}
+E(p)  
+& = & -\frac{p*(-$B/p^2)}{$A + $B/p} \\
+& = & \frac{$B/p}{$A + $B/p} \\
+& = & \frac{$B}{p} \times \frac{1}{$A + $B/p}\\ 
+& = & \frac{$B}{p($A + $B/p)} \\ 
+& = & \frac{$B}{$EQNS[0]p + $B} 
+\end{array}
+\]</center> 
+<br>
+And finally, plug in \[p = $P\].
+<br><br>
+<center>\[
+\begin{array}{rcl}
+E($P)  
+& = & \frac{$B}{$EQNS[0]\cdot $P + $B} \\
+& = & \frac{$B}{$EQNS[2] + $B} \\
+& = & \frac{$B}{$EQNS[3]} \\
+& = & $ANSWER
+\end{array}
+\]</center>
+</watex>"
+);
+''</EQN>
+
+
+<EQN $SOLUTIONS[$PROBLEM]>
+
+
+
+
+
+25. Second Derivative* (3419000)
+
+Question
+<EQN>
+
+$PROBLEM = randnum(0,2,1);
+
+if ( $PROBLEM == 0 )
+{
+$A = randnum(2,5,1);
+$B = randnum(1,1,1);
+$n = randnum(3,5,1,$A); $nn = $n - 1; $nnn = $n - 2;
+$ANS = $A*$n*($n-1)*$A;
+@err = pick(4,-4,-3,-2,-1,2,3,4,5,6,7,8,9,10);
+@EQNS = ($A*$n);
+$QUESTION = 'If \[f(x) = (${A}x + $B)^{$n}\], find the second derivative \[f<s:thinsp>\'\'(x)\] at \[x = 0\].';
+$ANSWER = $ANS;
+$WRONG1 = $ANS + 10*@err[0];
+$WRONG2 = $ANS + 10*@err[1];
+$WRONG3 = $ANS + 10*@err[2];
+$WRONG4 = $ANS + 10*@err[3];
+}
+elsif ( $PROBLEM == 1 )
+{
+$A = randnum(2,10,4);
+$B = randnum(1,9,1,$A);
+@EQNS = ($A*$A/4, $A/2);
+$QUESTION = 'Find the second derivative or \[f<s:thinsp>\'\'(x)\] for \[f(x) = \sqrt{${A}x + $B}\].';
+$ANSWER = '\[ -\frac{$EQNS[0]}{(${A}x + $B)^{3/2}} \]';
+$WRONG1 = '\[ \frac{$EQNS[1]}{(${A}x + $B)^{1/2}} \]';
+$WRONG2 = '\[ -\frac{$EQNS[1]}{2(${A}x + $B)^{3/2}} \]';
+$WRONG3 = '\[ -\frac{$EQNS[1]}{2(${A}x + $B)^{1/2}} \]';
+$WRONG4 = '\[ \frac{$EQNS[1]}{(${A}x + $B)^{3/2}} \]';
+}
+elsif ( $PROBLEM == 2 )
+{
+$A = randnum(2,4,1);
+$B = randnum(2,9,1,$A);
+$n = randnum(5,7,2); $nn = $n-2; $nnn = $n-4;
+@EQNS = ($A*$n, $A*$n*($n-2)*$A, $A*($n-1), $A*($n-2), $A + $n - 2, $n-2);
+$QUESTION = 'If \[f(x) = (${A}x^2 + $B)^{$n/2}\], find the second derivative \[f<s:thinsp>\'\'(x)\].';
+$ANSWER = '\[$EQNS[0](${A}x^2 + $B)^{$nnn/2}[$EQNS[2]x^2 + $B ]\]';
+$WRONG1 = '\[$EQNS[0]x(${A}x^2 + $B)^{$nn/2}\]';
+$WRONG2 = '\[$EQNS[1]x^2(${A}x^2 + $B)^{$nnn/2}\]';
+$WRONG3 = '\[$EQNS[0](${A}x^2 + $B)^{$nnn/2}[$EQNS[3]x^2 + $B ]\]';
+$WRONG4 = '\[$EQNS[0](${A}x^2 + $B)^{$nnn/2}[$EQNS[4]x^2 + $B ]\]';
+}
+''</EQN>
+
+<watex><EQN $QUESTION></watex>
+
+<_>
+
+Answer
+<watex><EQN $ANSWER></watex>
+<watex><EQN $WRONG1></watex>
+<watex><EQN $WRONG2></watex>
+<watex><EQN $WRONG3></watex>
+<watex><EQN $WRONG4></watex>
+
+<EQN>
+
+@SOLUTIONS = (
+"<watex>
+Use the generalized power rule to compute the first derivative:
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f<s:thinsp>'(x)  
+& = & $n(${A}x + $B)^{$nn}*$A \\
+& = & $EQNS[0](${A}x + $B)^{$nn} 
+\end{array}
+\]</center> 
+<br>
+Note the factor of \[$A\], which is the derivative of \[${A}x + $B\], that appears as a result of applying the chain rule.  After simplifying, compute the second derivative by again applying the generalized power rule.
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f<s:thinsp>''(x) 
+ & = & $EQNS[0]*$nn(${A}x + 1)^{$nnn}*$A \\
+& = & $ANS(${A}x + 1)^{$nnn} 
+\end{array}
+\]</center> 
+<br>
+Again note the factor of \[$A\] that appears as a result of applying the chain rule.  To complete the problem, plug in \[x = 0\].
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f<s:thinsp>''(0)  
+& = & $ANS(${A}*0 + 1)^{$nnn} \\
+& = & $ANS*1^{$nnn} \\
+& = & $ANS 
+\end{array}
+\]</center> 
+</watex>",
+
+"<watex>
+First, rewrite \[f(x)\] in the following manner:
+<br><br>
+<center>\[f(x) = (${A}x + $B)^{1/2}\]</center>
+<br>
+Next, use the generalized power rule to compute the first derivative:
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f<s:thinsp>'(x)  
+& = & \frac{1}{2}(${A}x + $B)^{-1/2}*$A \\
+& = & $EQNS[1](${A}x + $B)^{-1/2} 
+\end{array}
+\]</center> 
+<br>
+Note the factor of \[$A\], which is the derivative of \[${A}x + $B\], that appears as a result of applying the chain rule.  After simplifying, compute the second derivative by again applying the generalized power rule.
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f<s:thinsp>''(x)  
+& = & $EQNS[1]\left(-\frac{1}{2}\right)(${A}x + $B)^{-3/2}*$A \\
+& = & -$EQNS[0](${A}x + $B)^{-3/2}
+\end{array}
+\]</center> 
+<br>
+Again note the factor of \[$A\] that appears as a result of applying the chain rule.  
+</watex>",
+
+"<watex>
+Use the generalized power rule to compute the first derivative:
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f<s:thinsp>'(x) 
+& = & \frac{$n}{2}(${A}x^2 + $B)^{$nn/2}*$A*2x\\
+& = & $n*${A}x(${A}x^2 + $B)^{$nn/2} \\
+& = & $EQNS[0]x(${A}x^2 + $B)^{$nn/2}
+\end{array}
+\]</center> 
+<br>
+Note the factor of \[$A*2x\], which is the derivative of \[${A}x^2 + $B\], that appears as a result of applying the chain rule.  Furthermore, after simplifying, note that the first derivative is a product of two functions of \[x\].  Therefore, to compute the second derivative, start by applying the product rule.
+<br><br>
+<center>\[
+\begin{array}{rcll}
+f<s:thinsp>''(x)  
+& = & $EQNS[0](${A}x^2 + $B)^{$nn/2} + $EQNS[0]x\frac{$nn}{2}(${A}x^2 + $B)^{$nnn/2}*$A*2x &\\
+& = & $EQNS[0](${A}x^2 + $B)^{$nn/2} + $EQNS[0]*$A*$EQNS[5]x^2 (${A}x^2 + $B)^{$nnn/2} \\
+& = & $EQNS[0](${A}x^2 + $B)^{$nnn/2}[(${A}x^2 + $B) + $EQNS[3]x^2] & \pre{pull out common factors}\\
+& = & $EQNS[0](${A}x^2 + $B)^{$nnn/2}[$EQNS[2]x^2 + $B]
+\end{array}
+\]</center> 
+<br>
+Again note the factor of \[$A*2x\] that appears as a result of applying the chain rule.
+</watex>"
+);
+''</EQN>
+
+
+<EQN $SOLUTIONS[$PROBLEM]>
+
+
+
+
+
+26. Implicit Differentiation* (3419035)
+
+Question
+<EQN>
+
+$PROBLEM = randnum(0,2,1);
+
+if ( $PROBLEM == 0 )
+{
+$n = randnum(3,8,1); $nn = $n-1;
+$m = randnum(3,8,1,$n); $mm = $m-1;
+$A = randnum(10,20,1);
+$B = randnum(20,50,5);
+$F = randnum(2,$A*$B - 5,5);
+$D = $A*$B - $F;
+$ANS = $E*$A - $F;
+@EQNS = ($A,$n,$m);
+$QUESTION = 'Let \[x^{$n}y - x^{$m} + ${A}y - $B = 0\]. Find \[\frac{dy}{dx}\].';
+$ANSWER = '\[\frac{${m}x^{$mm} - ${n}x^{$nn}y}{x^{$n} + $A}\]';
+$WRONG1 = '\[\frac{${m}x^{$mm} - ${n}x^{$nn}y}{$A}\]';
+$WRONG2 = '\[\frac{${m}x^{$mm} - ${n}x^{$nn}y - $A}{x^{$n}}\]';
+$WRONG3 = '\[\frac{${m}x^{$mm} + ${n}x^{$nn}y}{x^{$n} - $A}\]';
+$WRONG4 = '\[\frac{x^{$n} + $A}{${m}x^{$mm} + ${n}x^{$nn}y}\]';
+}
+elsif ( $PROBLEM == 1 )
+{
+$X = randnum(2,5,1);
+$Y = 1;
+$A = randnum(3,8,1);
+$B = $A*$X + 1 - $X;
+$n = randnum(3,7,1); $nn = $n - 1;
+$m = randnum(3,$X*$n-2,1,$n); $mm = $m - 1;
+@err = pick(4,-4,-3,-2,-1,2,3,4,5,6,7,8,9,10);
+@EQNS = ($X*$n, $X*$n - $m, $A - $Y,$n,$m,$A);
+$QUESTION = 'Let \[xy^{$n} = ${A}x + y^{$m} - $B\]. Find \[\frac{dy}{dx}\] at \[($X,$Y)\].';
+$ANSWER = fraction($A-$Y,$X*$n - $m);
+$WRONG1 = fraction($A-$Y+@err[0],$X*$n - $m);
+$WRONG2 = fraction($A-$Y+@err[1],$X*$n - $m);
+$WRONG3 = fraction($A-$Y+@err[2],$X*$n - $m);
+$WRONG4 = fraction($A-$Y+@err[3],$X*$n - $m);
+}
+elsif ( $PROBLEM == 2 )
+{
+$A = randnum(2,6,2);
+$AA = $A*$A;
+$B = randnum(3,7,2);
+$Y = 0;
+@err = pick(4,-4,-3,-2,-1,2,3,4,5,6,7,8,9,10);
+@EQNS = (2*$A,2*$AA,$B - 2*$AA,$A,$B);
+$QUESTION = 'Let \[\sqrt{${A}x + ${B}y} = xy + x\]. Find \[\frac{dy}{dx}\] at \[($A,$Y)\].';
+$ANSWER = fraction($A,$B - 2*$AA);
+$WRONG1 = fraction($A + $err[0]*($B - 2*$AA),$B - 2*$AA);
+$WRONG2 = fraction($A + $err[1]*($B - 2*$AA),$B - 2*$AA);
+$WRONG3 = fraction($A + $err[2]*($B - 2*$AA),$B - 2*$AA);
+$WRONG4 = fraction($A + $err[3]*($B - 2*$AA),$B - 2*$AA);
+}
+''</EQN>
+
+<watex><EQN $QUESTION></watex>
+
+<_>
+
+Answer
+<watex><EQN $ANSWER></watex>
+<watex><EQN $WRONG1></watex>
+<watex><EQN $WRONG2></watex>
+<watex><EQN $WRONG3></watex>
+<watex><EQN $WRONG4></watex>
+
+<EQN>
+
+@SOLUTIONS = (
+"<watex>
+Use implicit differentiation to compute the derivative of both sides of \[x^{$n}y - x^{$m} + $EQNS[0]y - $B = 0\].  Make sure to use the product rule to differentiate \[x^{$n}y\] since we are treating \[y\] as a function of \[x\].
+<br><br>
+<center>\[ $EQNS[1]x^{$nn}y + x^{$n}y' - $EQNS[2]x^{$mm} + $EQNS[0]y' = 0\]</center>
+<br>
+Now solve for \[y'\] by grouping all of the terms that have a factor of \[y'\] on the left, and all other terms on the right.
+<br><br>
+<center>\[  x^{$n}y' + $EQNS[0]y' = $EQNS[2]x^{$mm} - $EQNS[1]x^{$nn}y\]</center>
+<br>
+Now factor out \[y'\] on the left side of the equation.
+<br><br>
+<center>\[  (x^{$n} + $A)y' = $EQNS[2]x^{$mm} - $EQNS[1]x^{$nn}y\]</center>
+<br>
+And finally, divide both sides by \[x^{$n} + $A\] to solve for \[y'\].
+<br><br>
+<center>\[y' = \frac{$EQNS[2]x^{$mm} - $EQNS[1]x^{$nn}y}{x^{$n} + $A}\]</center>
+</watex>",
+
+"<watex>
+Use implicit differentiation to compute the derivative of both sides of \[xy^{$n} = $EQNS[5]x + y^{$m} - $B\].  Make sure to use the product rule to differentiate \[xy^{$n}\] since we are treating \[y\] as a function of \[x\].
+<br><br>
+<center>\[ y^{$n} + x$EQNS[3]y^{$nn}y' = $A + $EQNS[4]y^{$mm}y'\]</center>
+<br>
+Now plug in \[x = $X\] and \[y = $Y\].
+<br><br>
+<center>\[ $Y^{$n} + $X*$n*$Y^{$nn}y' = $A + $m*$Y^{$mm}y'\]</center>
+<br>
+Simplify:
+<br><br>
+<center>\[$Y + $EQNS[0]y' = $A + $EQNS[4]y'\]</center>
+<br>
+Group like terms and simplify:
+<br><br>
+<center>\[$EQNS[1]y' = $EQNS[2]\]</center>
+<br>
+Solve for \[y'\]:
+<br><br>
+<center>\[y' = $ANSWER\]</center>
+</watex>",
+
+"<watex>
+Use implicit differentiation to compute the derivative of both sides of \[\sqrt{$EQNS[3]x + $EQNS[4]y} = xy + x\].  Make sure to use the product rule to differentiate \[xy\] since we are treating \[y\] as a function of \[x\].
+<br><br>
+<center>\[\frac{1}{2\sqrt{$EQNS[3]x + $EQNS[4]y}}($A + $EQNS[4]y') = y + xy' + 1\]</center>
+<br>
+Note the factor of \[$A + $EQNS[4]y'\], which is the derivative of \[$EQNS[3]x + $EQNS[4]y\], and appears as a result of applying the chain rule.  Now plug in \[x = $A\] and \[y = $Y\].
+<br><br>
+<center>\[\frac{1}{2\sqrt{$A*$A + $B*$Y}}($A + $EQNS[4]y') = $Y + $EQNS[3]y' + 1\]</center>
+<br>
+Simplify:
+<br><br>
+<center>\[\frac{1}{$EQNS[0]}($A + $EQNS[4]y') = $EQNS[3]y' + 1\]</center>
+<br>
+Multiply both sides by $EQNS[0]:
+<br><br>
+<center>\[$A + $EQNS[4]y' = $EQNS[1]y' + $EQNS[0]\]</center>
+<br>
+Group like terms:
+<br><br>
+<center>\[$EQNS[2]y' = $A\]</center>
+<br>
+Solve for \[y'\]:
+<br><br>
+<center>\[y' = $ANSWER\]</center>
+</watex>"
+);
+''</EQN>
+
+
+<EQN $SOLUTIONS[$PROBLEM]>
+
+
+
+
+
+27. Elasticity via Implicit Differentiation (3868970)
+
+Question
+<eqn>
+$A = randnum(2,5,1);
+$B = randnum(2,5,1);
+$D = randnum(2,5,1);
+$price = randnum(2,10,1);
+$C = $A*$D*$D + $B*$D + $price;
+$ADD = $A*$D*$D;
+$BD = $B*$D;
+
+@EQNS = ($A,$B,$C,$D, 2*$A, 2*$A*$D + $B);
+$QUESTION = 'The demand function for a certain brand of compact discs is given by
+<br><br>
+<center>\[p = -$EQNS[0]x^2 - $EQNS[1]x + $EQNS[2]\]</center>
+<br>
+where \[p\] is the wholesale unit price in dollars and \[x\] is the quantity demanded each week, measured in units of a thousand. Compute the elasticity of demand when \[x = $D\].';
+$ANSWER = fraction($price,$D*(2*$A*$D+$B));
+$WRONG1 = fraction($D*(2*$A*$D+$B),$price);
+$WRONG2 = fraction($price,2*$A*$D+$B);
+$WRONG3 = fraction(2*$A*$D+$B,$price);
+$WRONG4 = fraction(6*$price,$D*(2*$A*$D+$B));
+''</eqn>
+
+<watex><EQN $QUESTION></watex>
+
+<_>
+
+Answer
+<watex>\[<EQN $ANSWER>\]</watex>
+<watex>\[<EQN $WRONG1>\]</watex>
+<watex>\[<EQN $WRONG2>\]</watex>
+<watex>\[<EQN $WRONG3>\]</watex>
+<watex>\[<EQN $WRONG4>\]</watex>
+
+<watex>
+Recall that elasticity of demand is given by
+<br><br>
+<center>\[E(p) = -\frac{p*f'(p)}{f(p)}\]</center>
+<br>
+where \[x = f(p)\] is the demand function (quantity demanded as a function of price).  Since we were given \[x = $EQNS[3]\], we can compute the corresponding price \[p\] using the demand equation \[p = -$EQNS[0]x^2 - $EQNS[1]x + $EQNS[2]\]:
+<br><br>
+<center>\[
+\begin{array}{rcl}
+p  
+& = & -$EQNS[0]($EQNS[3])^2 - $EQNS[1]($EQNS[3]) + $EQNS[2] \\
+& = & -$ADD - $BD + $EQNS[2] \\
+& = & $price
+\end{array}
+\]</center>
+<br> 
+In other words, \[p = $price\] and \[f($price) = $D\].  In order to find \[f'($price)\], ordinarily we would first find \[f(p)\] by solving for \[x\] in the given demand equation (\[p = -$EQNS[0]x^2 - $EQNS[1]x + $EQNS[2]\]).  However, solving for \[x\] in this case is difficult.  So instead, we will use implicit differentiation to find \[f'(p)\].  More specifically, by treating \[x\] as a function of \[p\] (i.e., \[x = f(p)\]), differentiate both sides of the demand equation with respect to \[p\].
+<br><br>
+<center>\[
+\begin{array}{rcl}
+1 & = & -$EQNS[0]*2xx' - $EQNS[1]x'\\
+& = & -$EQNS[4]xx' - $EQNS[1]x'
+\end{array}
+\]</center>
+<br> 
+Now plug in \[x = $EQNS[3]\] to solve for \[x'\] (i.e., \[x' = f'(p)\]).
+<br><br>
+<center>\[
+\begin{array}{rcl}
+1 & = & -$EQNS[4]*$EQNS[3]x' - $EQNS[1]x' \\
+& = & -$EQNS[5]x'
+\end{array}
+\]</center>
+<br> 
+and therefore \[x' = f'($price) = -1/$EQNS[5]\].  And finally, we can compute elasticity of demand using the values \[p = $price\], \[f($price) = $D\], and \[f'($price) = -1/$EQNS[5]\].
+<br><br>
+<center>\[
+\begin{array}{rcl}
+E($price)
+& = & -\frac{$price*f'($price)}{f($price)} \\
+& = & -\frac{$price(-1/$EQNS[5])}{$D} \\
+& = & \frac{$price}{$D}*\frac{1}{$EQNS[5]} \\
+& = & $ANSWER
+\end{array}
+\]</center>
+</watex>
+
+
+
+
+28. Related Rates* (3406932)
+
+Question
+<EQN>
+
+($PROBLEM) = pick(1,0,1,2);
+$sign = randnum(-1,1,2);
+
+
+if ( $PROBLEM == 0 )
+{
+$answersign = '';
+$solutionsign = '-';
+$direction = 'increasing';
+if ($sign == -1){$direction = 'decreasing'; $answersign = '-'; $solutionsign = '+';}
+
+$A = randnum(100,500,100);
+$B = randnum(20,90,10);
+$C = randnum(200,200,200);
+$D = randnum(200,900,100);
+$ANS = $B*$A - 2*$D*$A/$C;
+@err = pick(4,-4,-3,-2,-1,2,3,4,5,6,7,8,9,10);
+$WRG1 = commas($ANS + 100*$err[0]);
+$WRG2 = commas($ANS + 100*$err[1]);
+$WRG3 = commas($ANS + 100*$err[2]);
+$WRG4 = commas($ANS + 100*$err[3]);
+$ANS = commas($B*$A - 2*$D*$A/$C);
+@EQNS = ($A, $sign*$A, $C/2, $B*$sign*$A, 2*$D*$A/$C, $sign*($B*$A - 2*$D*$A/$C),$B);
+$QUESTION = 'A company is $direction production of \it{math-brain} protein bars at a rate of $A cases per day. All cases produced can be sold. The daily demand function is given by
+<br><br>
+<center>\[p(x) = $B - \frac{x}{$C}\],</center>
+<br>
+where \[x\] is the number of cases produced and sold, and \[p\] is in dollars. Find the rate of change of the \uline{revenue} with respect to the time in days when the daily production is $D cases.';
+
+
+$ANSWER = '$answersign$ANS dollars per day';
+$WRONG1 = '$answersign$WRG1 dollars per day';
+$WRONG2 = '$answersign$WRG2 dollars per day';
+$WRONG3 = '$answersign$WRG3 dollars per day';
+$WRONG4 = '$answersign$WRG4 dollars per day';
+}
+elsif ( $PROBLEM == 1 )
+{
+$direction = 'rising';
+$wrongdirection = 'falling';
+if ($sign == -1){$direction = 'falling'; $wrongdirection = 'rising'; $answersign = '-'; $solutionsign = '+';}
+
+$p = randnum(2,7,1);
+$A = 100*randnum(2,5,1);
+$D = randnum(1,$p,1);
+$C = $A*$p*$p - $D*$D;
+$supply = commas($D*1000);
+$E = $D*randnum(3,6,1);
+
+@EQNS = ($E, $sign*$E, $A, $C + $D*$D, ($C + $D*$D) / $A, 2*$A, $sign * $A * $p * $E/ $D / 100, commas(10 * $A * $p * $E/ $D),2*$D, 2*$sign*$A*$p*$E/100);
+$QUESTION = 'The wholesale price \[p\] of e-tablet writing styluses in dollars is related to the supply \[x\] in thousands of units by
+<br><br><center>\[${A}p^2 - x^2 = $C\],</center><br>
+If $supply styluses are available at the beginning of a week, and the price is $direction at $E cents per week, which one of the following statements is true?';
+
+$randomsign = randnum(-1,1,2);
+$ANS = commas(10 * $A * $p * $E / $D);
+$WRG = commas(10 * $A * ($p + $randomsign)* $E / $D);
+$WPS = commas(10 * $A * ($p + $randomsign/2)* $E / $D);
+
+@WRONG = pick(4,('Supply is $wrongdirection at $ANS styluses per week','Supply is $direction at $WRG styluses per week','Supply is $wrongdirection at $WRG styluses per week','Supply is $direction at $WPS styluses per week','Supply is $wrongdirection at $WPS styluses per week'));
+
+$ANSWER = 'Supply is $direction at $ANS styluses per week';
+$WRONG1 = $WRONG[0];
+$WRONG2 = $WRONG[1];
+$WRONG3 = $WRONG[2];
+$WRONG4 = $WRONG[3];
+
+
+}
+elsif ( $PROBLEM == 2 )
+{
+$answersign = '';
+$solutionsign = '-';
+$direction = 'increasing';
+$otherdirection = 'decreasing';
+if ($sign == -1){$direction = 'decreasing'; $otherdirection = 'increasing'; $answersign = '-'; $solutionsign = '';}
+
+$A = randnum(2,5,1);
+$P = randnum(2,5,1);
+$X = randnum(2,5,1);
+$B = $P + $X + $A*$X*$P;
+$PP = ($A*$P + 1)*randnum(2,8,1);
+$demand = 1000*$X;
+
+$ANS = 10 * $PP * ($A*$X + 1)/($A*$P + 1);
+@EQNS = ($A, $sign*$PP, $A*$X + 1, $B - $X, $A*$P + 1,-1*$PP*($A*$X+1) ,-1*$sign*$PP, $PP * ($A*$X + 1) / ($A*$P + 1));
+$QUESTION = 'The weekly demand function is given by
+<br><br>
+<center>\[p + x + $EQNS[0]xp = $B\],</center>
+<br>
+where \[x\] is the number of thousands of units demanded weekly and \[p\] is in dollars. If the price \[p\] is $direction at a rate of $PP cents per week when the level of demand is $demand units, which one of the following statements is true?';
+
+$WRG = 10 * $PP * ($A*$X + 1 + $sign)/($A*$P + 1);
+$WPS = 10 * $PP * ($A*$X + 1 + 2*$sign)/($A*$P + 1);
+$ANSWER = 'Demand is $otherdirection at $ANS units per week';
+$WRONG1 = 'Demand is $direction at $ANS units per week';
+$WRONG2 = 'Demand is $direction at $WRG units per week';
+$WRONG3 = 'Demand is $otherdirection at $WRG units per week';
+$WRONG4 = 'Demand is $direction at $WPS units per week';
+
+
+}
+''</EQN>
+
+<watex><EQN $QUESTION></watex>
+
+<_>
+
+
+Answer
+<watex><EQN $ANSWER></watex>
+<watex><EQN $WRONG1></watex>
+<watex><EQN $WRONG2></watex>
+<watex><EQN $WRONG3></watex>
+<watex><EQN $WRONG4></watex>
+
+<EQN>
+
+@SOLUTIONS = (
+"<watex>
+The first thing to notice about this problem is that the rates of change are given with respect to time (e.g., $EQNS[0] cases per day).  This means we are dealing with a related rates problem.  We need to interpret all variables as being functions of time.
+<br><br>
+For the variable \[x\], we are told that production is $direction at a rate of $EQNS[0] cases per day.  This means
+<br><br>
+<center>\[ x' = \frac{dx}{dt} = $EQNS[1]\]</center>
+<br>
+We are asked to find the rate of change of revenue with respect to time when daily production is $D cases.  This means eventually we will plug in \[x = $D\].  But first we need to find the relationship between revenue, \[R\], and production, \[x\].  Using the given demand function, we can compute revenue by multiplying the level of production, \[x\], and the unit price, \[p(x)\].
+<br><br>
+<center>\[
+\begin{array}{rcl}
+R  & = & x*p(x) \\
+& = & x\left( $B - \frac{x}{$C} \right)   \\
+& = & $EQNS[6]x - \frac{x^2}{$C} 
+\end{array}
+\]</center> 
+<br>
+Now differentiate both sides using the technique of implicit differentiation.
+<br><br>
+<center>\[
+\begin{array}{rcl}
+R'  & = & $EQNS[6]x' - \frac{2xx'}{$C}  \\
+& = & $EQNS[6]x' - \frac{xx'}{$EQNS[2]} 
+\end{array}
+\]</center> 
+<br>
+And finally, plug in \[x = $D\] and \[x' = $EQNS[1]\].
+<br><br>
+<center>\[
+\begin{array}{rcl}
+R'  & = & $EQNS[6]($EQNS[1]) - \frac{($D)($EQNS[1])}{$EQNS[2]} \\
+& = & $EQNS[3] $solutionsign $EQNS[4] \\
+& = & $EQNS[5]
+\end{array}
+\]</center> 
+</watex>",
+
+"<watex>
+The first thing to notice about this problem is that the rates of change are given with respect to time (e.g., $EQNS[0] cents per week).  This means we are dealing with a related rates problem.  We need to interpret all variables as being functions of time.
+<br><br>
+For the variable \[p\], we are told that price is $direction at a rate of $EQNS[0] cents per week.  This means
+<br><br>
+<center>\[ p' = \frac{dp}{dt} = $EQNS[1]/100\]</center>
+<br>
+since \[p\] is in dollars.  We are asked to find the rate of change of supply with respect to time when the weekly supply is $supply styluses (i.e., \[x = $D\]).  But first we need to find the corresponding price \[p\] when \[x = $D\].  Using the given supply equation (\[$EQNS[2]p^2 - x^2 = $C\]), plug in \[x = $D\] and solve for \[p\].
+<br><br>
+<center>\[$EQNS[2]p^2 - $D^2 = $C\]</center> 
+<br>
+Add \[$D^2\] to both sides.
+<br><br>
+<center>\[
+\begin{array}{rcl}
+$EQNS[2]p^2 & = & $C + $D^2  \\
+& = & $EQNS[3]
+\end{array}
+\]</center> 
+<br>
+Divide both sides by $EQNS[2].
+<br><br>
+<center>\[
+\begin{array}{rcl}
+p^2 & = & \frac{$EQNS[3]}{$EQNS[2]}  \\
+& = & $EQNS[4]
+\end{array}
+\]</center> 
+<br>
+and therefore \[p = $p\].  
+<br><br>
+To find the rate of change of supply with respect to time, compute the derivative of both sides of the supply equation (\[$EQNS[2]p^2 - x^2 = $C\]) using implicit differentiation.
+<br><br>
+<center>\[$EQNS[5]pp' - 2xx' = 0\] </center>
+<br>
+Now plug in \[x = $D\], \[p = $p\], and \[p' = $EQNS[1]/100\].
+<br><br>
+<center>\[$EQNS[5]($p)($EQNS[1]/100) - 2($D)x' = 0\] </center>
+<br>
+Simplifying yields
+<br><br>
+<center>\[$EQNS[9] - $EQNS[8]x' = 0\] </center>
+<br>
+and therefore
+<center>\[x' = \frac{$EQNS[9]}{$EQNS[8]} = $EQNS[6]\] </center>
+<br><br>
+which means that supply is $direction at $EQNS[7] styluses per week.
+</watex>",
+
+"<watex>
+The first thing to notice about this problem is that the rates of change are given with respect to time (e.g., $PP cents per week).  This means we are dealing with a related rates problem.  We need to interpret all variables as being functions of time.
+<br><br>
+For the variable \[p\], we are told that price is $direction at a rate of $PP cents per week.  This means
+<br><br>
+<center>\[ p' = \frac{dp}{dt} = $EQNS[1]/100\]</center>
+<br>
+since \[p\] is in dollars.  We are asked to find the rate of change of demand with respect to time when the weekly demand is $demand styluses (i.e., \[x = $X\]).  But first we need to find the corresponding price \[p\] when \[x = $X\].  Using the given demand equation (\[p + x + $EQNS[0]xp = $B\]), plug in \[x = $X\] and solve for \[p\].
+<br><br>
+<center>\[p + $X + $EQNS[0]($X)p = $B\]</center> 
+<br>
+Simplifying yields
+<br><br>
+<center>\[$EQNS[2]p = $EQNS[3]\]</center> 
+<br>
+and therefore, \[p = $EQNS[3]/$EQNS[2] = $P\].  
+<br><br>
+To find the rate of change of demand with respect to time, compute the derivative of both sides of the demand equation (\[p + x + $EQNS[0]xp = $B\]) using implicit differentiation.  Make sure to use the product rule when computing the derivative of \[$EQNS[0]xp\].
+<br><br>
+<center>\[p' + x' + $EQNS[0]x'p + $EQNS[0]xp' = 0\] </center>
+<br>
+Now plug in \[x = $X\], \[p = $P\], and \[p' = $EQNS[1]/100\].
+<br><br>
+<center>\[$EQNS[1]/100 + x' + $EQNS[0]x'($P) + $EQNS[0]($X)($EQNS[1]/100) = 0\] </center>
+<br>
+Simplifying yields
+<br><br>
+<center>\[$EQNS[4]x' = $EQNS[6]($EQNS[2])/100\] </center>
+<br>
+and therefore
+<center>\[x' = $solutionsign\frac{$PP($EQNS[2])}{$EQNS[4] \cdot 100} = $solutionsign\frac{$EQNS[7]}{100}\] </center>
+<br><br>
+which means that demand is $otherdirection at $ANS units per week since \[x\] is in thousands of units.
+</watex>"
+);
+''</EQN>
+
+
+<EQN $SOLUTIONS[$PROBLEM]>
+
+
+
+
+
+01. Intervals of Increase/Decrease* (3420471)
+
+Question
+<EQN>
+
+$INDEX = randnum(0,1,1);
+@direction = ('increasing','decreasing');
+$dir = $direction[$INDEX];
+
+$PROBLEM = randnum(0,3,1);
+
+
+if ( $PROBLEM == 0 )
+{
+$A = randnum(2,5,1);
+$B = $A + randnum(2,4,2);
+$C = randnum(6,9,3);
+$D = randnum(5,30,1);
+@EQNS = ($C/3, $C*($A+$B)/2, $A*$B*$C, $C*($A+$B), $A+$B, $A*$B, ($A+$B)/2, $B+1, $C);
+$QUESTION = 'Let \[f(x) = $EQNS[0]x^3 - $EQNS[1]x^2 + $EQNS[2]x - $D\]. Find the intervals where \[f\] is $dir.';
+$ANSWER = '(-\infty,$A) <s:union> ($B,\infty)';
+$WRONG1 = '($A,$B)';
+if ( $INDEX == 1 ) {$WRONG1 = '(-\infty,$A) <s:union> ($B,\infty)'; $ANSWER = '($A,$B)';}
+$WRONG2 = '($A,$B) <s:union> ($B,\infty)';
+$WRONG3 = '(-\infty,-$A) <s:union> ($B,\infty)';
+$WRONG4 = '(-\infty,-$B) <s:union> ($A,\infty)';
+}
+elsif ( $PROBLEM == 1 )
+{
+$A = 4*randnum(2,5,1);
+$B = randnum(2,5,1);
+$BB = $B*$B;
+$C = 5*randnum(3,9,1);
+@EQNS = ($A/4, $A*$BB/2, $A, $A*$BB, -$B-1, $B+1);
+$QUESTION = 'Let \[f(x) = $EQNS[0]x^4 - $EQNS[1]x^2 + $C\]. Find the intervals where \[f\] is $dir.';
+$ANSWER = '(-$B,0) <s:union> ($B,\infty)';
+$WRONG1 = '(-\infty,-$B) <s:union> (0,$B)';
+if ( $INDEX == 1 ) {$WRONG1 = '(-$B,0) <s:union> ($B,\infty)'; $ANSWER = '(-\infty,-$B) <s:union> (0,$B)';}
+$WRONG2 = '(-\infty,-$B) <s:union> ($B,\infty)';
+$WRONG3 = '(-$B,0) <s:union> (0,$B)';
+$WRONG4 = '(0,$B) <s:union> ($B,\infty)';
+}
+elsif ( $PROBLEM == 2 )
+{
+$n = randnum(4,8,2); $nn = $n - 1;
+$A = randnum(2,4,1);
+$B = $A * $n * randnum(2,3,1);
+$D = randnum(5,30,1);
+@EQNS = ($A, $B, $B*($n-1)/($A*$n), $n, $n - 1, $n - 2, $B/$A, $A*$n, $B*($n-1)/(2*$A*$n), $B*($n-1)/($A*$n) + 1 );
+$QUESTION = 'Let \[f(x) = $EQNS[0]x^{$n} - $EQNS[1]x^{$nn} + $D\]. Find the intervals where \[f\] is $dir.';
+$ANSWER = '($EQNS[2],\infty)';
+$WRONG1 = '(-\infty,0) <s:union> (0,$EQNS[2])';
+if ( $INDEX == 1 ) {$WRONG1 = $ANSWER; $ANSWER = '(-\infty,0) <s:union> (0,$EQNS[2])';}
+$WRONG2 = '(-\infty,0) <s:union> ($EQNS[2],\infty)';
+$WRONG3 = '(0,$EQNS[2])';
+$WRONG4 = '(0,\infty)';
+}
+elsif ( $PROBLEM == 3 )
+{
+$A = randnum(2,10,8);
+$B = randnum(3,9,3);
+$C = randnum(5,30,5);
+@EQNS = ($A/2, 2*$A*$B/3, $A*$B*$B/2, $A, 2*$A*$B, $A*$B*$B, 2*$B, $B*$B, $B+1);
+$QUESTION = 'Let \[f(x) = \frac{$EQNS[0]}{2}x^4 - $EQNS[1]x^3 + $EQNS[2]x^2 + $C\]. Find the intervals where \[f\] is $dir.';
+$ANSWER = '(0,$B) <s:union> ($B,\infty)';
+$WRONG1 = '(-\infty,0)';
+if ( $INDEX == 1 ) {$WRONG1 = $ANSWER; $ANSWER = '(-\infty,0)';}
+$WRONG2 = '(-\infty,0) <s:union> ($B,\infty)';
+$WRONG3 = '(-\infty,0) <s:union> (0,$B)';
+$WRONG4 = '($B,\infty)';}
+
+''</EQN>
+
+<watex><EQN $QUESTION></watex>
+
+<_>
+
+Answer
+<watex><EQN $ANSWER></watex>
+<watex><EQN $WRONG1></watex>
+<watex><EQN $WRONG2></watex>
+<watex><EQN $WRONG3></watex>
+<watex><EQN $WRONG4></watex>
+
+<EQN>
+
+@SOLUTIONS = (
+"<watex>
+In order to find the intervals of increase and/or decrease, first compute \[f'(x)\].
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f'(x) & = & $EQNS[0]*3x^2 - $EQNS[1]*2x + $EQNS[2] \\
+& = & $EQNS[8]x^2 - $EQNS[3]x + $EQNS[2] \\
+& = & $C(x^2 - $EQNS[4]x + $EQNS[5]) \\
+& = & $C(x - $A)(x - $B)
+\end{array}
+\]</center>
+<br>
+Next, find where \[f'(x) = 0\] and where \[f'(x)\] has any discontinuities.  In particular, \[f'(x)\] is continuous everywhere and \[f'(x) = 0\] when \[x = $A\] and when \[x = $B\].  These values break up the domain of \[f'(x)\] into three intervals:
+<br><br>
+<center>(-\infty,$A), ($A,$B), and ($B,\infty)</center>
+<br>
+Plug one number from each interval into \[f'(x)\] to determine the sign of \[f'(x)\], and thus the behavior of \[f(x)\], on each interval:
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f'(0) & = & $C(0 - $A)(0 - $B) > 0\\
+f'($EQNS[6]) & = & $C($EQNS[6] - $A)($EQNS[6] - $B) < 0\\
+f'($EQNS[7]) & = & $C($EQNS[7] - $A)($EQNS[7] - $B) > 0\\
+\end{array}
+\]</center>
+<br>
+Since \[f'(0) > 0\], \[f'(x) > 0\] for all \[x < $A\], and therefore \[f(x)\] is increasing on \[(-\infty,$A)\].  
+<br><br>
+Since \[f'($EQNS[6]) < 0\], \[f'(x) < 0\] for all \[$A < x < $B\], and therefore \[f(x)\] is decreasing on \[($A,$B)\]. 
+<br><br>
+And finally, since \[f'($EQNS[7]) > 0\], \[f'(x) > 0\] for all \[x > $B\], and therefore \[f(x)\] is increasing on \[($B,\infty)\].
+</watex>",
+
+"<watex>
+In order to find the intervals of increase and/or decrease, first compute \[f'(x)\].
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f'(x) & = & $EQNS[0]*4x^3 - $EQNS[1]*2x \\
+& = & $EQNS[2]x^3 - $EQNS[3]x \\
+& = & $EQNS[2]x(x^2 - $BB) \\
+& = & $EQNS[2]x(x - $B)(x + $B)
+\end{array}
+\]</center>
+<br>
+Next, find where \[f'(x) = 0\] and where \[f'(x)\] has any discontinuities.  In particular, \[f'(x)\] is continuous everywhere and \[f'(x) = 0\] when \[x = 0\] and when \[x = \pm$B\].  These values break up the domain of \[f'(x)\] into four intervals:
+<br><br>
+<center>(-\infty,-$B), (-$B,0), (0,$B), and ($B,\infty)</center>
+<br>
+Plug one number from each interval into \[f'(x)\] to determine the sign of \[f'(x)\], and thus the behavior of \[f(x)\], on each interval:
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f'($EQNS[4]) & = & $A($EQNS[4])($EQNS[4] - $B)($EQNS[4] + $B) < 0 \\
+f'(-1) & = & $A(-1)(-1 - $B)(-1 + $B) > 0 \\
+f'(1) & = & $A(1)(1 - $B)(1 + $B) < 0 \\
+f'($EQNS[5]) & = & $A($EQNS[5])($EQNS[5] - $B)($EQNS[5] + $B) > 0 \\
+\end{array}
+\]</center>
+<br>
+Since \[f'($EQNS[4]) < 0\], \[f'(x) < 0\] for all \[x < -$B\], and therefore \[f(x)\] is decreasing on \[(-\infty,-$B)\].  
+<br><br>
+Since \[f'(-1) > 0\], \[f'(x) > 0\] for all \[-$B < x < 0\], and therefore \[f(x)\] is increasing on \[(-$B,0)\]. 
+<br><br>
+Since \[f'(1) < 0\], \[f'(x) < 0\] for all \[0 < x < $B\], and therefore \[f(x)\] is decreasing on \[(0,$B)\]. 
+<br><br>
+And finally, since \[f'($EQNS[5]) > 0\], \[f'(x) > 0\] for all \[x > $B\], and therefore \[f(x)\] is increasing on \[($B,\infty)\].
+</watex>",
+
+"<watex>
+In order to find the intervals of increase and/or decrease, first compute \[f'(x)\].
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f'(x) & = & $A*$EQNS[3]x^{$nn} - $B*$EQNS[4]x^{$EQNS[5]} \\
+& = & $EQNS[0]x^{$EQNS[5]}($EQNS[3]x - $EQNS[6]*$EQNS[4])  \\
+& = & $EQNS[7]x^{$EQNS[5]}(x - $EQNS[2])  \\
+\end{array}
+\]</center>
+<br>
+Next, find where \[f'(x) = 0\] and where \[f'(x)\] has any discontinuities.  In particular, \[f'(x)\] is continuous everywhere and \[f'(x) = 0\] when \[x = 0\] and when \[x = $EQNS[2]\].  These values break up the domain of \[f'(x)\] into three intervals:
+<br><br>
+<center>(-\infty,0), (0,$EQNS[2]), and ($EQNS[2],\infty)</center>
+<br>
+Plug one number from each interval into \[f'(x)\] to determine the sign of \[f'(x)\], and thus the behavior of \[f(x)\], on each interval:
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f'(-1) & = & $EQNS[7](-1)^{$EQNS[5]}(-1 - $EQNS[2]) < 0\\
+f'($EQNS[8]) & = & $EQNS[7]($EQNS[8])^{$EQNS[5]}($EQNS[8] - $EQNS[2]) < 0\\
+f'($EQNS[9]) & = & $EQNS[7]($EQNS[9])^{$EQNS[5]}($EQNS[9] - $EQNS[2]) > 0\\
+\end{array}
+\]</center>
+<br>
+Since \[f'(-1) < 0\], \[f'(x) < 0\] for all \[x < 0\], and therefore \[f(x)\] is decreasing on \[(-\infty,0)\].  
+<br><br>
+Since \[f'($EQNS[8]) < 0\], \[f'(x) < 0\] for all \[0 < x < $EQNS[2]\], and therefore \[f(x)\] is decreasing on \[(0,$EQNS[2])\]. 
+<br><br>
+And finally, since \[f'($EQNS[9]) > 0\], \[f'(x) > 0\] for all \[x > $EQNS[2]\], and therefore \[f(x)\] is increasing on \[($EQNS[2],\infty)\].
+</watex>",
+
+"<watex>
+In order to find the intervals of increase and/or decrease, first compute \[f'(x)\].
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f'(x) & = & \frac{$EQNS[0]}{2}*4x^3 - $EQNS[1]*3x^2 + $EQNS[2]*2x  \\
+& = & $EQNS[3]x^3 - $EQNS[4]x^2 + $EQNS[5]x  \\
+& = & $EQNS[3]x(x^2 - $EQNS[6]x + $EQNS[7])   \\
+& = & $EQNS[3]x(x - $B)^2 
+\end{array}
+\]</center>
+<br>
+Next, find where \[f'(x) = 0\] and where \[f'(x)\] has any discontinuities.  In particular, \[f'(x)\] is continuous everywhere and \[f'(x) = 0\] when \[x = 0\] and when \[x = $B\].  These values break up the domain of \[f'(x)\] into three intervals:
+<br><br>
+<center>(-\infty,0), (0,$B), and ($B,\infty)</center>
+<br>
+Plug one number from each interval into \[f'(x)\] to determine the sign of \[f'(x)\], and thus the behavior of \[f(x)\], on each interval:
+<br><br>
+<center>\[
+\begin{array}{rcl}
+f'(-1) & = & $A(-1)(-1 - $B)^2 < 0\\
+f'(1) & = & $A(1)(1 - $B)^2 > 0\\
+f'($EQNS[8]) & = & $A($EQNS[8])($EQNS[8] - $B)^2  > 0\\
+\end{array}
+\]</center>
+<br>
+Since \[f'(-1) < 0\], \[f'(x) < 0\] for all \[x < 0\], and therefore \[f(x)\] is decreasing on \[(-\infty,0)\].  
+<br><br>
+Since \[f'(1) < 0\], \[f'(x) > 0\] for all \[0 < x < $B\], and therefore \[f(x)\] is increasing on \[(0,$B)\].  
+<br><br>
+And finally, since \[f'($EQNS[8]) > 0\], \[f'(x) > 0\] for all \[x > $B\], and therefore \[f(x)\] is increasing on \[($B,\infty)\].
+</watex>"
+);
+''</EQN>
+
+<watex>
+<hr><b>General Procedure for Finding Intervals of Increase and/or Decrease</b><br>
+Intervals of increase and intervals of decrease of \[f(x)\] are found by determining the intervals where the derivative of \[f(x)\] is positive and where the derivative of \[f(x)\] is negative, respectively. To find these intervals, first compute \[f'(x)\] and then determine where it is equal to zero and where it is discontinuous.  These values break up the domain of \[f(x)\] into smaller subintervals.  Pick one test number from each subinterval, and plug it into \[f'(x)\] to determine the behavior of \[f(x)\] on that subinterval.  If \[f'(x)\] is positive at a test number, then \[f(x)\] is increasing on the corresponding subinterval.  If \[f'(x)\] is negative at a test number, then \[f(x)\] is decreasing on the corresponding subinterval.
+<br><hr><br>
+</watex>
+<EQN $SOLUTIONS[$PROBLEM]>
+
+
