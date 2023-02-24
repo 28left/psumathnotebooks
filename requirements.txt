@@ -1,10 +1,8 @@
 matplotlib
 numpy
 sympy
-pandas
 ipywidgets
 jupyter_contrib_nbextensions
 ipyvuetify
-scipy
 voila
 git+https://github.com/28left/cyllene.git
