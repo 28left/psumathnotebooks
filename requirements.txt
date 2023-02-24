@@ -1,8 +1,2 @@
-matplotlib
-numpy
-sympy
-ipywidgets
-jupyter_contrib_nbextensions
-ipyvuetify
 voila
 git+https://github.com/28left/cyllene.git
