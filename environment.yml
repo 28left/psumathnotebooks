@@ -12,4 +12,5 @@ dependencies:
   - jupyter_contrib_nbextensions
   - rise
   - pip
+  - voila
   
