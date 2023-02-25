@@ -1,2 +1,2 @@
 voila
-git+https://github.com/28left/cyllene.git
+git+https://github.com/28left/cyllene.git@releases/tag/v0.4.1
