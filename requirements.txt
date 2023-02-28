@@ -1,2 +1,2 @@
 voila
-git+https://github.com/28left/cyllene.git@0.4.4
+git+https://github.com/28left/cyllene.git@0.4.5
