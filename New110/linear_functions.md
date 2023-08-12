@@ -18,6 +18,8 @@ import cyllene
 from cyllene.MathProblems.problem_handler import ProblemHandler
 from cyllene.user.problem_cmds import make_problem
 from cyllene.widgets.widgets_problem_basic import MultipleChoiceWidget
+from cyllene.widgets.widgets_problem_param import MultipleChoiceParameterWidget
+
 
 import pandas as pd
 
@@ -30,15 +32,67 @@ from matplotlib.ticker import FormatStrFormatter
 import numpy as np
 import math
 from random import shuffle
+import markdown as md
 
 import ipywidgets as widgets
-from IPython.display import display, clear_output, Markdown
+from IPython.display import display, clear_output, Markdown, Math
 
 plt.close("all")
 ```
 
 ```python
 %matplotlib inline
+```
+
+```python
+#
+# Problems
+#
+```
+
+```python
+%%makeproblem P1
+
+<<Statement>>
+What does the y-intercept of the line above represent in this context?
+
+<<Choices>>
+- The average life expectancy (in years) of a US citizen in the year 1900
+- The average life expectancy (in years) of a US citizen in the year 0
+- The number of US citizens in 1900 (in millions)  
+- The number of US citizens 56 or older in 1900 (in millions)
+
+<<Solution>>
+The value of the function at $x$ represents average US life expectancy in year $1900+x$. <br>
+For the y-intercept, we set $x=0$.
+
+<<Info>>
+'tags': ["linear functions", "modeling"],
+'title': "Understanding intercept",
+'id': "linear functions 1",
+'solution_title': "Show Hint"
+```
+
+```python
+%%makeproblem P2
+
+<<Statement>>
+Which about the following statements abouyt the slope $m$ of the function is true?
+
+<<Choices>>
+- Every year, US life expectancy increases by $m$ years.
+- Every twenty years, US life expectancy increases by $m$ years.
+- Every year, the total US population grows by $m$ million people.   
+- Every twenty years, the number of US citizens older than 50 increases by $m$ million people.
+
+<<Solution>>
+The slope of a line corresponds directly to its **rate of change**: if $x$ changes by 1 year, the value of the function changes by $m$. The value of the function represents US life expectancy.
+
+<<Info>>
+'tags': ["linear functions", "modeling"],
+'title': "Understanding slope",
+'id': "linear functions 2",
+'solution_title': "Show Hint"
 ```
 
 ## Linear growth
@@ -106,57 +160,13 @@ The blue line now represents a linear function, determined by its **slope** and 
 
 
 ---
-
-```python
-%%makeproblem P1
-
-<<Statement>>
-What does the y-intercept of the line above represent in this context?
-
-<<Choices>>
-- The average life expectancy (in years) of a US citizen in the year 1900
-- The average life expectancy (in years) of a US citizen in the year 0
-- The number of US citizens in 1900 (in millions)  
-- The number of US citizens 56 or older in 1900 (in millions)
-
-<<Solution>>
-The value of the function at $x$ represents average US life expectancy in year $1900+x$. <br>
-For the y-intercept, we set $x=0$.
-
-<<Info>>
-'tags': ["linear functions", "modeling"],
-'title': "Understanding intercept",
-'id': "linear functions 1",
-'solution_title': "Show Hint"
-```
+### Interpreting the model
 
 ```python
 %showproblem P1
 ```
 
 ---
-
-```python
-%%makeproblem P2
-
-<<Statement>>
-Which about the following statements abouyt the slope $m$ of the function is true?
-
-<<Choices>>
-- Every year, US life expectancy increases by $m$ years.
-- Every twenty years, US life expectancy increases by $m$ years.
-- Every year, the total US population grows by $m$ million people.   
-- Every twenty years, the number of US citizens older than 50 increases by $m$ million people.
-
-<<Solution>>
-The slope of a line corresponds directly to its **rate of change**: if $x$ changes by 1 year, the value of the function changes by $m$. The value of the function represents US life expectancy.
-
-<<Info>>
-'tags': ["linear functions", "modeling"],
-'title': "Understanding slope",
-'id': "linear functions 2",
-'solution_title': "Show Hint"
-```
 
 ```python
 %showproblem P2
@@ -167,54 +177,68 @@ The slope of a line corresponds directly to its **rate of change**: if $x$ chang
 
 ### Applying the model
 
-Now consider the linear model alone, without the actual data. We want to use it to make predictions about the future average life expectancy of the US population.
-
-
-For example, we would like to estimate the average life expectancy in 2030. For this purpose, we use the value of our model at $x=130$ (keep in mind that $x=0$ corresponds to the year 1900).
+Now consider the linear model alone, without the actual data. We want to use it to make predictions about the future average life expectancy of the US population. Click '**Start**' below to launch the activity.
 
 ```python
-def plot_linear_w_grid(slope, intercept):
-    
-    DP = 2
-    
-    x = np.linspace(0,160, 160)
-    y = linear_function(x, slope, intercept)
+%%makeproblem P3
+<<Parameters>>
 
-    fig = plt.figure(figsize=(8, 6), dpi=100, facecolor='w', edgecolor='k')
-    fig.canvas.draw()
-    ax = plt.gca()
-    
-    # set up axis
-    ax.spines['left'].set_position('zero')
-    ax.spines['right'].set_color('none')
-    ax.spines['bottom'].set_position('zero')
-    ax.spines['top'].set_color('none')
-    ax.xaxis.set_ticks_position('bottom')
-    ax.yaxis.set_ticks_position('left')
+<<Statement>>
+*According to the model, what is the estimated US life expectancy in 2040?*
 
-    # draw curve
-    line, = ax.plot(x, y)
-    
-    # mark point
-    ax.plot(x[129], y[129] , 'ro')
+<<Choices>>
+- @{round(140*slope_slider.value+intercept_slider.value,2)}
+- @{round(140*slope_slider.value+intercept_slider.value-5,2)}
+- @{round(140*slope_slider.value+intercept_slider.value+15,2)}
+- 140.00
 
-    # set bounds
-    ax.set_xbound(0,160)
-    ax.set_ybound(0,100)
-    
-    # format axes and grid
-    ax.xaxis.set_major_locator(MultipleLocator(10))
-    ax.yaxis.set_major_locator(MultipleLocator(10))
-    ax.xaxis.grid(True,'major',linewidth=2/DP,linestyle='-',color='#d7d7d7',zorder=0)
-    ax.yaxis.grid(True,'major',linewidth=2/DP,linestyle='-',color='#d7d7d7')
+<<Solution>>
+The slope of a line corresponds directly to its **rate of change**: if $x$ changes by 1 year, the value of the function changes by $m$. The value of the function represents US life expectancy.
 
-    ax.xaxis.set_minor_locator(MultipleLocator(2))
-    ax.yaxis.set_minor_locator(MultipleLocator(2))
-    ax.xaxis.grid(True,'minor',linewidth=0.5/DP,linestyle='-',color='#d7d7d7')
-    ax.yaxis.grid(True,'minor',linewidth=0.5/DP,linestyle='-',color='#d7d7d7')
+<<Info>>
+'tags': ["linear functions", "modeling"],
+'title': "Try it yourself",
+'id': "linear functions 3",
+'solution_title': "Show Hint"
+```
 
-    ax.set_axisbelow(True)
-    ax.set_aspect('equal')
+```python
+%%makeproblem P4
+<<Parameters>>
+'A': 'pickone(90,100,110,120)'
+
+<<Statement>>
+*According to the model, when does US life expectancy reach @{A} years?*
+
+<<Choices>>
+- @{math.floor((A-intercept_slider.value)/slope_slider.value)+1900}
+- @{math.floor(((A-10)-intercept_slider.value)/slope_slider.value)+1900}
+- @{math.floor(A*slope_slider.value+intercept_slider.value)+1900}
+- @{math.floor((A+30)*slope_slider.value+intercept_slider.value)+1900}
+
+<<Solution>>
+You need to solve $@{A} = \text{slope}*x + \text{intercept}$ for $x$.
+
+<<Info>>
+'tags': ["linear functions", "modeling"],
+'title': "Try it yourself",
+'id': "linear functions 4",
+'solution_title': "Show Hint"
+```
+
+```python
+launch_button = widgets.Button(description="Start",
+                               button_style='success', 
+                               tooltip='Start Activity')
+center_layout = widgets.Layout(display='flex',
+                flex_flow='column',
+                align_items='center',
+                width='100%')
+center_button = widgets.HBox(children=[launch_button],layout=center_layout)
+
+
+out_1 = widgets.Output()
+
 
 #     ax.xaxis.set_major_formatter(FormatStrFormatter('%i'))
 #     xticks = ax.xaxis.get_major_ticks()
@@ -247,156 +271,147 @@ def plot_linear_w_grid(slope, intercept):
 #     plt.grid(True)
     
     
-interactive_solo_plot = widgets.interactive_output(plot_linear_w_grid, {'slope': slope_slider, 'intercept': intercept_slider})
-display(interactive_solo_plot)
+# interactive_solo_plot = widgets.interactive_output(plot_linear_w_grid, {'slope': slope_slider, 'intercept': intercept_slider})
+# display(interactive_solo_plot)
 
 # estimate = widgets.Label(value="Estimated US life expectancy in 1930 = " + str(linear_function(129,slope,intercept)))
     
-def print_estimate(slope, intercept):
-    display(Markdown("Estimated US life expectancy in 2030: **" + str(round(linear_function(130,slope,intercept),2)) + " years**"))
+# def print_estimate(slope, intercept):
+#     display(Markdown("Estimated US life expectancy in 2030: **" + str(round(linear_function(130,slope,intercept),2)) + " years**"))
     
-interactive_estimate = widgets.interactive_output(print_estimate, {'slope': slope_slider, 'intercept': intercept_slider})
-display(interactive_estimate)
-                                                  
-                                                  
-# user_model = widgets.Output()
+# interactive_estimate = widgets.interactive_output(print_estimate, {'slope': slope_slider, 'intercept': intercept_slider})
+# display(interactive_estimate)
 
-# with user_model:
-
-#     plot_linear_w_grid(ax1, slope_slider.value, intercept_slider.value)
+def on_launch(b):
     
-# display(user_model)
-
-# def handle_slope_slider_change(change):
+    # Fix sliders and deactivate
+    slope_slider.disabled = True
+    intercept_slider.disabled = True
+    slope = slope_slider.value
+    intercept = intercept_slider.value
     
-#     with user_model:
-#         fig1, ax1 = plt.subplots()
-#         plot_linear_w_grid(ax1, change['new'], intercept_slider.value)
-        
-# slope_slider.observe(handle_slope_slider_change, names='value')
+    # Fix display strings
+    out_1_text_0 = """#### The model
 
+Using the sliders above, you fixed _slope_ = {0} and _intercept_ = {1}, 
+giving a linear function
 
+$$y = {2} x + {3}$$
+""".format(str(round(slope,2)), str(intercept), str(round(slope,2)), str(intercept))
 
-```
+    out_1_text_1 = """#### Estimating future life expectancy
 
-```python
-%%makeproblem P3
-<<Parameters>>
+For example, we would like to estimate the average life expectancy in 2030. 
+For this purpose, we use the value of our model at $x=130$ 
+(keep in mind that $x=0$ corresponds to the year 1900).
+    """
 
-<<Statement>>
-*According to the model, what is the estimated US life expectancy in 2040?*
+    out_1_text_2 = """#### Estimating life expectancy milestones 
 
-<<Choices>>
-- @{round(140*slope_slider.value+intercept_slider.value,2)}
-- @{round(140*slope_slider.value+intercept_slider.value-5,2)}
-- @{round(140*slope_slider.value+intercept_slider.value+15,2)}
-- 140
+Similary, we can use the model to approximate when life expectancy crosses a 
+certain threshold. For example, to estimate how long it will take life expectancy 
+to reach 80 years, we have to find $x$ for which the model assumes the value $80$. 
+<br><br>
 
-<<Solution>>
-The slope of a line corresponds directly to its **rate of change**: if $x$ changes by 1 year, the value of the function changes by $m$. The value of the function represents US life expectancy.
+<b>In the graph</b>, that corresponds to finding the $x$ at which the line intersection 
+the horizontal line at $y=80$.
+<br><br>
 
-<<Info>>
-'tags': ["linear functions", "modeling"],
-'title': "Estimating future life expectancy",
-'id': "linear functions 3",
-'solution_title': "Show Hint"
-```
+<b>Algebraically</b>, it means solving $80 = {0} x + {1}$, which yields $x \\approx {2}$ 
+In other words, your linear model estimates that US life expectancy first reaches 
+80 years in the year {3}. Compare this to the graph above.
+""".format(str(round(slope,2)), 
+               str(intercept),  
+               str(round((80-intercept)/slope,2)), 
+               str(math.floor((80-intercept)/slope)+1900)) 
 
-```python
-P3 = cyllene.ProbStack.stack["P3"]
-M3 = MultipleChoiceWidget(P3.get_problem())
-M3.show()
-```
-
-```python
-def update_p3_choices(*args):
-    choices = [str(round(linear_function(140,slope_slider.value,intercept_slider.value),2)),
-               str(round(linear_function(140,slope_slider.value,intercept_slider.value),2)-5),
-               str(round(linear_function(140,slope_slider.value,intercept_slider.value),2)+15),
-               str(140)]
-    M3.update_choices(choices)
-    
-intercept_slider.observe(update_p3_choices, 'value')
-slope_slider.observe(update_p3_choices, 'value')
-```
-
----
-
-
-Similary, we can use the model to approximate when life expectancy crosses a certain threshold. For example, to estimate how long it will take life expectancy to reach 80 years, we have to find $x$ for which the model assumes the value $80$. 
-
-
-**In the graph**, that corresponds to finding the $x$ at which the line intersection the horizontal line at $y=80$.
-
-
-
-
-```python
-eq = widgets.Output()
-with eq:
-    clear_output()
-    display(widgets.HTMLMath('<p style="font-size:1.08em;"><b>Algebraically</b>, it means solving $80 = ' + str(round(slope_slider.value,2)) + 'x + ' + str(intercept_slider.value) +'$,'
-                     + ' which yields $x \\approx ' 
-                     + str(round((80-intercept_slider.value)/slope_slider.value,2))
-                     + '$. In other words, your linear model estimates that US life expectancy first reaches 80 years in the year ' 
-                     + str(math.floor((80-intercept_slider.value)/slope_slider.value)+1900) 
-                     + '. Compare this to the graph above.</p>'))
-
-display(eq)
-
-def eq_string(*args):
-    with eq:
+    # show activity
+    with out_1:
         clear_output()
-        display(widgets.HTMLMath('<p style="font-size:1.08em;"><b>Algebraically</b>, it means solving $80 = ' + str(round(slope_slider.value,2)) + 'x + ' + str(intercept_slider.value) +'$,'
-                     + ' which yields $x \\approx ' 
-                     + str(round((80-intercept_slider.value)/slope_slider.value,2))
-                     + '$. In other words, your linear model estimates that US life expectancy first reaches 80 years in the year ' 
-                     + str(math.floor((80-intercept_slider.value)/slope_slider.value)+1900) 
-                     + '. Compare this to the graph above.</p>'))
 
-intercept_slider.observe(eq_string, 'value')
-slope_slider.observe(eq_string, 'value')
-```
+        display(widgets.HTMLMath(md.markdown(out_1_text_0)))
 
-```python
-%%makeproblem P4
-<<Parameters>>
+        display(widgets.HTMLMath(md.markdown(out_1_text_1)))
+        
+        #
+        # BEGIN: Plot model in extended grid
+        #
+        DP = 2
 
-<<Statement>>
-*According to the model, when will US life expectancy reach 90 years?*
+        x = np.linspace(0,160, 160)
+        y = linear_function(x, slope, intercept)
 
-<<Choices>>
-- @{math.floor((90-intercept_slider.value)/slope_slider.value)+1900}
-- @{math.floor((100-intercept_slider.value)/slope_slider.value)+1900}
-- @{math.floor(90*slope_slider.value+intercept_slider.value)+1900}
-- @{math.floor(150*slope_slider.value+intercept_slider.value)+1900}
+        fig = plt.figure(figsize=(8, 6), dpi=100, facecolor='w', edgecolor='k')
+        fig.canvas.draw()
+        ax = plt.gca()
 
-<<Solution>>
-You need to solve $90 = \text{slope}*x + \text{intercept}$ for $x$.
+        # set up axis
+        ax.spines['left'].set_position('zero')
+        ax.spines['right'].set_color('none')
+        ax.spines['bottom'].set_position('zero')
+        ax.spines['top'].set_color('none')
+        ax.xaxis.set_ticks_position('bottom')
+        ax.yaxis.set_ticks_position('left')
 
-<<Info>>
-'tags': ["linear functions", "modeling"],
-'title': "Estimating life expectancy milestones",
-'id': "linear functions 4",
-'solution_title': "Show Hint"
-```
+        # draw curve
+        line, = ax.plot(x, y)
 
-```python
-P4 = cyllene.ProbStack.stack["P4"]
-M4 = MultipleChoiceWidget(P4.get_problem())
-M4.show()
-```
+        # mark point
+        ax.plot(x[129], y[129] , 'ro')
 
-```python
-def update_p4_choices(*args):
-    choices = [str(math.floor((90-intercept_slider.value)/slope_slider.value)+1900),
-               str(math.floor((100-intercept_slider.value)/slope_slider.value)+1900),
-               str(math.floor(90*slope_slider.value+intercept_slider.value)+1900),
-               str(math.floor(150*slope_slider.value+intercept_slider.value)+1900)]
-    M4.update_choices(choices)
+        # set bounds
+        ax.set_xbound(0,160)
+        ax.set_ybound(0,100)
+
+        # format axes and grid
+        ax.xaxis.set_major_locator(MultipleLocator(10))
+        ax.yaxis.set_major_locator(MultipleLocator(10))
+        ax.xaxis.grid(True,'major',linewidth=2/DP,linestyle='-',color='#d7d7d7',zorder=0)
+        ax.yaxis.grid(True,'major',linewidth=2/DP,linestyle='-',color='#d7d7d7')
+
+        ax.xaxis.set_minor_locator(MultipleLocator(2))
+        ax.yaxis.set_minor_locator(MultipleLocator(2))
+        ax.xaxis.grid(True,'minor',linewidth=0.5/DP,linestyle='-',color='#d7d7d7')
+        ax.yaxis.grid(True,'minor',linewidth=0.5/DP,linestyle='-',color='#d7d7d7')
+
+        ax.set_axisbelow(True)
+        ax.set_aspect('equal')
+        
+        plt.show(fig)
+        
+        #
+        # END plot
+        #
     
-intercept_slider.observe(update_p4_choices, 'value')
-slope_slider.observe(update_p4_choices, 'value')
+        # Show calculated estimate
+        display(Markdown("Estimated US life expectancy in 2030: **" + str(round(linear_function(130,slope,intercept),2)) + " years**"))
+    
+        # Try yourself multiple choice
+        P3 = cyllene.ProbStack.stack["P3"]
+        M3 = MultipleChoiceWidget(P3.get_problem())
+        M3.show()
+        
+        # estimating milestones
+        display(widgets.HTMLMath(md.markdown(out_1_text_2)))
+        
+        # Try it yourself
+        P4 = cyllene.ProbStack.stack["P4"]
+        M4 = MultipleChoiceParameterWidget(P4)
+        M4.show()
+
+        
+launch_button.on_click(on_launch)
+    
+
+
+```
+
+```python
+display(center_button)
+```
+
+```python
+display(out_1)
 ```
 
 ---
