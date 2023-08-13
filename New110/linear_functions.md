@@ -13,12 +13,15 @@ jupyter:
     name: python3
 ---
 
-```python
+```python hide_input=true
 import cyllene
 from cyllene.MathProblems.problem_handler import ProblemHandler
 from cyllene.user.problem_cmds import make_problem
 from cyllene.widgets.widgets_problem_basic import MultipleChoiceWidget
 from cyllene.widgets.widgets_problem_param import MultipleChoiceParameterWidget
+from cyllene.widgets.vue_problem_basic import VueMultipleChoiceWidget
+from cyllene.widgets.vue_problem_parameter import VueParameterMultipleChoiceWidget
+
 
 
 import pandas as pd
@@ -40,17 +43,17 @@ from IPython.display import display, clear_output, Markdown, Math
 plt.close("all")
 ```
 
-```python
+```python hide_input=true
 %matplotlib inline
 ```
 
-```python
+```python hide_input=true
 #
 # Problems
 #
 ```
 
-```python
+```python hide_input=true
 %%makeproblem P1
 
 <<Statement>>
@@ -73,11 +76,11 @@ For the y-intercept, we set $x=0$.
 'solution_title': "Show Hint"
 ```
 
-```python
+```python hide_input=true
 %%makeproblem P2
 
 <<Statement>>
-Which about the following statements abouyt the slope $m$ of the function is true?
+Which of the following statements abouyt the slope $m$ of the function is true?
 
 <<Choices>>
 - Every year, US life expectancy increases by $m$ years.
@@ -329,7 +332,8 @@ In other words, your linear model estimates that US life expectancy first reache
     with out_1:
         clear_output()
 
-        display(widgets.HTMLMath(md.markdown(out_1_text_0)))
+        display(Markdown(out_1_text_0))
+        # display(widgets.HTMLMath(md.markdown(out_1_text_0)))
 
         display(widgets.HTMLMath(md.markdown(out_1_text_1)))
         
@@ -388,7 +392,7 @@ In other words, your linear model estimates that US life expectancy first reache
     
         # Try yourself multiple choice
         P3 = cyllene.ProbStack.stack["P3"]
-        M3 = MultipleChoiceWidget(P3.get_problem())
+        M3 = VueMultipleChoiceWidget(P3.get_problem())
         M3.show()
         
         # estimating milestones
@@ -396,7 +400,7 @@ In other words, your linear model estimates that US life expectancy first reache
         
         # Try it yourself
         P4 = cyllene.ProbStack.stack["P4"]
-        M4 = MultipleChoiceParameterWidget(P4)
+        M4 = VueParameterMultipleChoiceWidget(P4)
         M4.show()
 
         
