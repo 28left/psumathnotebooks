@@ -41,6 +41,7 @@ import ipywidgets as widgets
 from IPython.display import display, clear_output, Markdown, Math
 
 plt.close("all")
+plt.set_loglevel("info") 
 ```
 
 ```python hide_input=true
