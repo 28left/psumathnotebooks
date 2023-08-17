@@ -1,6 +1,7 @@
 jupyterlab
 pandas
 matplotlib
+bqplot
 numpy
 scipy
 scikit-learn
