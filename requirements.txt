@@ -1,11 +1,11 @@
 jupyterlab
 pandas
 matplotlib
-bqplot
 numpy
 scipy
 scikit-learn
-voila
-voila-material
+voila==0.5.0
+voila-topbar==0.1.1
+ipykernel
 py-asciimath
-git+https://github.com/28left/cyllene.git@0.6
+git+https://github.com/28left/cyllene.git@0.6.1
